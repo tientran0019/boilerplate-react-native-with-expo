@@ -24,6 +24,7 @@
 		"no-plusplus": 0,
 		"no-bitwise": 0,
 		"function-paren-newline": 0,
+		"operator-linebreak": 0,
 		"react/no-string-refs": 0,
 		"react/no-array-index-key": 0,
         "react/forbid-prop-types": "off",
