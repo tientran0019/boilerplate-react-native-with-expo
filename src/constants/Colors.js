@@ -7,7 +7,7 @@
 *------------------------------------------------------- */
 
 export default {
-	primary: '#555CC4',
+	primary: '#00548c',
 	primaryLight: '#829BF8',
 	primaryGradientStart: '#4f44b6',
 	primaryGradientEnd: '#4f44b6',

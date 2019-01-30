@@ -10,18 +10,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 
-import { StyleSheet, Text, View, UIManager } from 'react-native';
+import { StyleSheet, StatusBar, View, UIManager } from 'react-native';
 
 import { Font, AppLoading } from 'expo';
 
 import store from 'src/redux/store';
 
+import Colors from 'src/constants/Colors';
+
+import RootNavigation from 'src/routers/RootNavigation';
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
 	},
 });
 
@@ -85,7 +87,8 @@ export default class App extends Component {
 		return (
 			<Provider store={store}>
 				<View style={styles.container}>
-					<Text>Open up App.js to start working on your app!</Text>
+					<StatusBar barStyle="light-content" backgroundColor={Colors.watermelon} />
+					<RootNavigation />
 				</View>
 			</Provider>
 		);
