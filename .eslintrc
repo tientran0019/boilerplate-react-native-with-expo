@@ -1,0 +1,76 @@
+{
+	"parser": "babel-eslint",
+	"extends": ["airbnb"],
+	"plugins": [
+		"react",
+		"jsx-a11y",
+		"import"
+	],
+	"rules": {
+		"import/prefer-default-export": "off",
+        "max-len": "off",
+        "global-require": "off",
+        "quote-props": "off",
+        "arrow-parens": "off",
+		"indent": [2, "tab", {"SwitchCase": 1}],
+		"object-curly-newline": 0,
+		"prefer-template": 0,
+		"consistent-return": 0,
+		"arrow-body-style": 0,
+		"prefer-destructuring": 1,
+        "no-underscore-dangle": "off",
+		"no-lonely-if": 0,
+		"no-tabs": 0,
+		"no-plusplus": 0,
+		"no-bitwise": 0,
+		"function-paren-newline": 0,
+		"react/no-string-refs": 0,
+		"react/no-array-index-key": 0,
+        "react/forbid-prop-types": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+		"react/jsx-indent": [2, "tab"],
+		"react/jsx-indent-props": [2, "tab"],
+		"react/no-danger": 0,
+		"jsx-a11y/anchor-is-valid": 0,
+		"jsx-a11y/click-events-have-key-events": 0,
+		"jsx-a11y/no-static-element-interactions": 0,
+		"jsx-a11y/href-no-hash": "off",
+		"no-unused-vars": [
+			"error",
+			{
+				"vars": "all",
+				"args": "none",
+				"ignoreRestSiblings": true
+			}
+		]
+	},
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"extensions": [".js", ".android.js", ".ios.js", ".jsx", ".json"]
+			},
+			"babel-module": {
+				"root": [
+					"./"
+				],
+				"alias": {
+					"src": "./src",
+					"assets": "./assets"
+				}
+			}
+		},
+		"import/core-modules": [
+			"styled-jsx/css"
+		]
+	},
+	"parserOptions": {
+		"ecmaFeatures": {
+			"legacyDecorators": true
+		}
+	},
+	"globals": {
+		"fetch": true,
+		"__DEV__": true,
+		"FormData": true
+	}
+}

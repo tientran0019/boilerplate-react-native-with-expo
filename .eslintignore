@@ -1,0 +1,9 @@
+node_modules/**
+dist/**
+.next/**
+.expo/**
+
+.DS_Store
+*.sw[po]
+
+tsconfig.json
