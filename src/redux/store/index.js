@@ -10,6 +10,7 @@ import { AsyncStorage } from 'react-native';
 import { Iterable } from 'immutable';
 import { persistStore, persistReducer } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -52,10 +53,12 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 const composeMiddleware = !__DEV__ ?
 	applyMiddleware(sagaMiddleware) :
-	compose(
+	composeWithDevTools({
+		// Options: https://github.com/jhen0409/react-native-debugger#options
+	})(compose(
 		applyMiddleware(sagaMiddleware),
 		applyMiddleware(logger),
-	);
+	));
 
 const store = createStore(
 	persistedReducer,
