@@ -13,7 +13,6 @@ import {
 	StyleSheet,
 	View,
 	Animated,
-	Platform,
 	Dimensions,
 } from 'react-native';
 import { Input, Button } from 'react-native-elements';

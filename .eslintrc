@@ -1,6 +1,8 @@
 {
 	"parser": "babel-eslint",
-	"extends": ["airbnb"],
+	"extends": [
+		"airbnb"
+	],
 	"plugins": [
 		"react",
 		"jsx-a11y",
@@ -8,17 +10,23 @@
 	],
 	"rules": {
 		"import/prefer-default-export": "off",
-        "max-len": "off",
-        "global-require": "off",
-        "quote-props": "off",
-        "arrow-parens": "off",
-		"indent": [2, "tab", {"SwitchCase": 1}],
+		"max-len": "off",
+		"global-require": "off",
+		"quote-props": "off",
+		"arrow-parens": "off",
+		"indent": [
+			2,
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
 		"object-curly-newline": 0,
 		"prefer-template": 0,
 		"consistent-return": 0,
 		"arrow-body-style": 0,
 		"prefer-destructuring": 1,
-        "no-underscore-dangle": "off",
+		"no-underscore-dangle": "off",
 		"no-lonely-if": 0,
 		"no-tabs": 0,
 		"no-plusplus": 0,
@@ -30,10 +38,24 @@
 		"react/jsx-one-expression-per-line": 0,
 		"react/no-string-refs": 0,
 		"react/no-array-index-key": 0,
-        "react/forbid-prop-types": "off",
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-		"react/jsx-indent": [2, "tab"],
-		"react/jsx-indent-props": [2, "tab"],
+		"react/forbid-prop-types": "off",
+		"react/jsx-filename-extension": [
+			1,
+			{
+				"extensions": [
+					".js",
+					".jsx"
+				]
+			}
+		],
+		"react/jsx-indent": [
+			2,
+			"tab"
+		],
+		"react/jsx-indent-props": [
+			2,
+			"tab"
+		],
 		"react/no-danger": 0,
 		"jsx-a11y/anchor-is-valid": 0,
 		"jsx-a11y/click-events-have-key-events": 0,
@@ -51,7 +73,13 @@
 	"settings": {
 		"import/resolver": {
 			"node": {
-				"extensions": [".js", ".android.js", ".ios.js", ".jsx", ".json"]
+				"extensions": [
+					".js",
+					".android.js",
+					".ios.js",
+					".jsx",
+					".json"
+				]
 			},
 			"babel-module": {
 				"root": [

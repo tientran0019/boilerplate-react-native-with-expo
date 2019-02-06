@@ -14,7 +14,7 @@
 
 ```bash
 # Clone the repo
-git clone https://github.com/ductienas/react-native-boilerplate-with-expo.git
+git clone https://github.com/tientran0019/react-native-boilerplate-with-expo.git
 
 # Install dependencies
 yarn
@@ -36,7 +36,7 @@ That's it! Cool, right?
 
 ## Contributing
 
-If you find any problems, please [open an issue](https://github.com/ductienas/react-native-boilerplate-with-expo/issues/new) or submit a fix as a pull request.
+If you find any problems, please [open an issue](https://github.com/tientran0019/react-native-boilerplate-with-expo/issues/new) or submit a fix as a pull request.
 
 ## Author
-Trần Đức Tiến <ductienas@gmail.com>
+Trần Đức Tiến <tientran0019@gmail.com>
