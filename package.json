@@ -3,17 +3,26 @@
   "version": "0.0.1",
   "main": "node_modules/expo/AppEntry.js",
   "repository": "https://github.com/tientran0019/react-native-boilerplate-with-expo",
-  "author": "Tien Tran <tientran0019@gmail.com>",
+  "description": "A boilerplate for a react-native app using expo",
+  "author": "Trần Đức Tiến <tientran0019@gmail.com>",
+  "keywords": [
+    "expo",
+    "boilerplate",
+    "react-native",
+    "redux",
+    "redux-saga",
+    "redux-devtools-extension"
+  ],
+  "license": "MIT",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
+    "clean-install": "rm -rf node_modules && npm cache clean --force && watchman watch-del-all && yarn",
+    "debug": "REACT_DEBUGGER=\"unset ELECTRON_RUN_AS_NODE && open -g 'rndebugger://set-debugger-loc?port=19001' ||\" yarn start",
     "reset": "expo r -c"
-  },
-  "jest": {
-    "preset": "jest-expo"
   },
   "dependencies": {
     "@expo/samples": "~3.0.3",
@@ -59,5 +68,5 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3"
   },
-  "private": true
+  "private": false
 }
