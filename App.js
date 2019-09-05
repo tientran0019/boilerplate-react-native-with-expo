@@ -1,24 +1,23 @@
-/* --------------------------------------------------------
-* Author Trần Đức Tiến
-* Email ductienas@gmail.com
-* Phone 0972970075
-*
-* Created: 2019-01-30 11:25:43
-*------------------------------------------------------- */
-
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Provider } from 'react-redux';
 
-import { StyleSheet, StatusBar, View, UIManager } from 'react-native';
+import { AppLoading } from 'expo';
+import { Asset } from 'expo-asset';
+import * as Font from 'expo-font';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-import { Font, AppLoading } from 'expo';
+import AppNavigator from './navigation/AppNavigator';
 
-import store from 'src/redux/store';
+function handleLoadingError(error) {
+	// In this case, you might want to report the error to your error reporting
+	// service, for example Sentry
+	console.warn(error);
+}
 
-import Colors from 'src/constants/Colors';
-
-import RootNavigation from 'src/routers/RootNavigation';
+function handleFinishLoading(setLoadingComplete) {
+	setLoadingComplete(true);
+}
 
 const styles = StyleSheet.create({
 	container: {
@@ -27,70 +26,46 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default class App extends Component {
-	static propTypes = {
-		skipLoadingScreen: PropTypes.bool,
-	}
-
-	static defaultProps = {
-		skipLoadingScreen: false,
-	}
-
-	state = {
-		isReady: false,
-	}
-
-	componentDidMount() {
-		console.disableYellowBox = true;
-		// eslint-disable-next-line no-unused-expressions
-		UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-	}
-
-	_loadResourcesAsync = async () => Promise.all([
-		// TODO: Remove unudsed fonts to speed up application loading
+async function loadResourcesAsync() {
+	await Promise.all([
+		Asset.loadAsync([
+			require('./assets/images/robot-dev.png'),
+			require('./assets/images/robot-prod.png'),
+		]),
 		Font.loadAsync({
-			'Lato-Bold': require('./assets/fonts/Lato-Bold.ttf'),
-			'Lato-BoldItalic': require('./assets/fonts/Lato-BoldItalic.ttf'),
-			'Lato-Italic': require('./assets/fonts/Lato-Italic.ttf'),
-			'Lato-Light': require('./assets/fonts/Lato-Light.ttf'),
-			'Lato-Medium': require('./assets/fonts/Lato-Medium.ttf'),
-			'Lato-Regular': require('./assets/fonts/Lato-Regular.ttf'),
-			'Lato-Semibold': require('./assets/fonts/Lato-Semibold.ttf'),
-			'Lato-Thin': require('./assets/fonts/Lato-Thin.ttf'),
+			// This is the font that we are using for our tab bar
+			...Ionicons.font,
+			// We include SpaceMono because we use it in HomeScreen.js. Feel free to
+			// remove this if you are not using it in your app
+			'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
 		}),
 	]);
+}
 
-	_handleLoadingError = (error) => {
-		// In this case, you might want to report the error to your error
-		// reporting service, for example Sentry
-		console.warn(error);
-	};
+export default function App(props) {
+	const [isLoadingComplete, setLoadingComplete] = useState(false);
 
-	_handleFinishLoading = () => {
-		this.setState({ isReady: true });
-	};
-
-	render() {
-		const { isReady } = this.state;
-		const { skipLoadingScreen } = this.props;
-
-		if (!isReady && !skipLoadingScreen) {
-			return (
-				<AppLoading
-					startAsync={this._loadResourcesAsync}
-					onError={this._handleLoadingError}
-					onFinish={this._handleFinishLoading}
-				/>
-			);
-		}
-
+	if (!isLoadingComplete && !props.skipLoadingScreen) {
 		return (
-			<Provider store={store}>
-				<View style={styles.container}>
-					<StatusBar barStyle="light-content" backgroundColor={Colors.watermelon} />
-					<RootNavigation />
-				</View>
-			</Provider>
+			<AppLoading
+				startAsync={loadResourcesAsync}
+				onError={handleLoadingError}
+				onFinish={() => handleFinishLoading(setLoadingComplete)}
+			/>
 		);
 	}
+	return (
+		<View style={styles.container}>
+			{Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+			<AppNavigator />
+		</View>
+	);
 }
+
+App.propTypes = {
+	skipLoadingScreen: PropTypes.bool,
+};
+
+App.defaultProps = {
+	skipLoadingScreen: false,
+};
