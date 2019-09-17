@@ -66,8 +66,8 @@ export default function* ({ uri, params = {}, opt = {}, loading = true, uploadFi
 	}
 
 	// set token
-	if (AuthStorage.loggedIn) {
-		options.headers.Authorization = AuthStorage.token;
+	if (yield AuthStorage.loggedIn) {
+		options.headers.Authorization = yield AuthStorage.token;
 	}
 
 	let url = uri;
@@ -112,7 +112,7 @@ export default function* ({ uri, params = {}, opt = {}, loading = true, uploadFi
 			if (error.statusCode === 401 && error.code !== 'ACCOUNT_DISABLED') {
 				// Access token has expired
 				if (error.code === 'INVALID_TOKEN') {
-					if (AuthStorage.loggedIn) {
+					if (yield AuthStorage.loggedIn) {
 						yield put({ type: 'LOGOUT_REQUEST' });
 					}
 
@@ -124,7 +124,7 @@ export default function* ({ uri, params = {}, opt = {}, loading = true, uploadFi
 				}
 			} else if (error.statusCode === 401 && error.code === 'ACCOUNT_DISABLED') {
 				// Access token has expired
-				if (AuthStorage.loggedIn) {
+				if (yield AuthStorage.loggedIn) {
 					yield put({ type: 'LOGOUT_REQUEST' });
 				}
 

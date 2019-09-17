@@ -24,13 +24,12 @@ function* callApi(action) {
 			beforeCallType: 'CLEAR_CACHE_FEEDS_FB',
 			afterCallType: 'CLEAR_CACHE_FEEDS_FB',
 			successType: 'GET_CART_LIST_SUCCESS',
-			afterSuccess: next,
 			errorType: 'GET_CART_LIST_SUCCESS',
-			afterError: next,
+			afterFinishing: next,
 		}
 		*/
 
-		const { successType, beforeCallType, afterCallType, afterSuccess, errorType, afterError, ...rest } = action.payload;
+		const { successType, beforeCallType, afterCallType, afterFinishing = f => f, errorType, ...rest } = action.payload;
 
 		if (beforeCallType) {
 			yield put({ type: beforeCallType });
@@ -48,7 +47,7 @@ function* callApi(action) {
 			}
 
 			if (typeof afterSuccess === 'function') {
-				afterSuccess(response);
+				afterFinishing(null, response);
 			}
 		} else {
 			if (errorType) {
@@ -56,7 +55,7 @@ function* callApi(action) {
 			}
 
 			if (typeof afterError === 'function') {
-				afterError(response.error);
+				afterFinishing(response.error);
 			}
 		}
 	}

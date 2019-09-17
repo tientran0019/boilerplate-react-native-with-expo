@@ -8,11 +8,11 @@
 
 import { SINGLE_API } from 'src/redux/actions/type';
 
-export const uploadFiles = (payload, next = f => f, nextError = f => f) => {
+export const uploadFiles = (payload, next = f => f) => {
 	let { files } = payload;
 
 	if (!files || files.length === 0) {
-		next([]);
+		next(null, []);
 		return {
 			type: 'NOT_UPLOAD',
 		};
@@ -23,7 +23,7 @@ export const uploadFiles = (payload, next = f => f, nextError = f => f) => {
 	});
 
 	if (files.length === 0) {
-		next([]);
+		next(null, []);
 		return {
 			type: 'NOT_UPLOAD',
 		};
@@ -36,14 +36,16 @@ export const uploadFiles = (payload, next = f => f, nextError = f => f) => {
 			params: { files },
 			opt: { method: 'POST' },
 			uploadFile: true,
-			afterSuccess: (res) => {
+			afterFinishing: (err, res) => {
+				if (err) {
+					return next(err);
+				}
 				const imagesReturn = res.result.files.files.map((img) => {
 					return img.providerResponse.location;
 				});
 
-				next(imagesReturn);
+				next(null, imagesReturn);
 			},
-			afterError: nextError,
 		},
 	};
 };

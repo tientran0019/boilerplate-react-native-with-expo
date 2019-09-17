@@ -10,7 +10,7 @@ import AuthStorage from 'src/utils/AuthStorage';
 
 import { SINGLE_API, REQUEST_ERROR } from 'src/redux/actions/type';
 
-export const editProfile = (payload, next, nextError) => {
+export const editProfile = (payload, next) => {
 	const { id, ...user } = payload;
 
 	return {
@@ -20,45 +20,40 @@ export const editProfile = (payload, next, nextError) => {
 			params: user,
 			opt: { method: 'PATCH' },
 			successType: 'EDIT_PROFILE_SUCCESS',
-			afterSuccess: next,
-			afterError: nextError,
+			afterFinishing: next,
 		},
 	};
 };
 
-export function loginRequest(payload, next, nextErr) {
+export function loginRequest(payload, next) {
 	return {
 		type: 'LOGIN_REQUEST',
 		payload,
 		next,
-		nextErr,
 	};
 }
 
-export function loginGoogle(payload, next, nextErr) {
+export function loginGoogle(payload, next) {
 	return {
 		type: 'LOGIN_GOOGLE',
 		payload,
 		next,
-		nextErr,
 	};
 }
 
-export function loginFacebook(payload, next, nextErr) {
+export function loginFacebook(payload, next) {
 	return {
 		type: 'LOGIN_FACEBOOK',
 		payload,
 		next,
-		nextErr,
 	};
 }
 
-export function signUpRequest(payload, next, nextErr) {
+export function signUpRequest(payload, next) {
 	return {
 		type: 'SIGN_UP_REQUEST',
 		payload,
 		next,
-		nextErr,
 	};
 }
 
@@ -69,48 +64,49 @@ export function logoutRequest(next) {
 	};
 }
 
-export const getUserAuth = (payload, next) => {
+export const getUserAuth = async (payload, next) => {
+	const userId = await AuthStorage.userId;
+
 	const filter = {};
+
 	return {
 		type: SINGLE_API,
 		payload: {
-			uri: '/users/' + AuthStorage.userId + `?filter=${JSON.stringify(filter)}`,
+			uri: '/users/' + userId + `?filter=${JSON.stringify(filter)}`,
 			successType: 'GET_USER_AUTH_SUCCESS',
-			afterSuccess: next,
+			afterFinishing: next,
 		},
 	};
 };
 
-export const resetPassword = (payload, next, nextError) => {
+export const resetPassword = (payload, next) => {
 	return {
 		type: SINGLE_API,
 		payload: {
 			uri: '/users/reset-password?access_token=' + payload.token,
 			params: { newPassword: payload.password },
 			opt: { method: 'POST' },
-			afterSuccess: next,
-			afterError: nextError,
+			afterFinishing: next,
 		},
 	};
 };
 
-export const forgotPassword = (payload, next, nextError) => {
+export const forgotPassword = (payload, next) => {
 	return {
 		type: SINGLE_API,
 		payload: {
 			uri: '/users/reset',
 			params: { email: payload.email },
 			opt: { method: 'POST' },
-			afterSuccess: next,
-			afterError: nextError,
+			afterFinishing: next,
 		},
 	};
 };
 
-export const changePassword = (payload, next, nextError) => {
-	if (!AuthStorage.loggedIn) {
+export const changePassword = async (payload, next = f => f) => {
+	if (await !AuthStorage.loggedIn) {
 		if (typeof nextError === 'function') {
-			nextError();
+			next('Login is required!');
 		}
 		return {
 			type: REQUEST_ERROR,
@@ -124,8 +120,7 @@ export const changePassword = (payload, next, nextError) => {
 			uri: '/users/change-password',
 			params: { oldPassword, newPassword },
 			opt: { method: 'POST' },
-			afterSuccess: next,
-			afterError: nextError,
+			afterFinishing: next,
 		},
 	};
 };

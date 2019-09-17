@@ -4,8 +4,8 @@
 		"airbnb"
 	],
 	"plugins": [
-		"react",
 		"jsx-a11y",
+		"react",
 		"import"
 	],
 	"rules": {
@@ -34,6 +34,8 @@
 		"function-paren-newline": 0,
 		"operator-linebreak": 0,
 		"react/jsx-wrap-multilines": 0,
+		"react/jsx-props-no-spreading": 0,
+		"react/jsx-curly-newline": 0,
 		"react/destructuring-assignment": 0,
 		"react/jsx-one-expression-per-line": 0,
 		"react/no-string-refs": 0,
@@ -57,6 +59,8 @@
 			"tab"
 		],
 		"react/no-danger": 0,
+		"react/static-property-placement": 0,
+		"react/state-in-constructor": 0,
 		"jsx-a11y/anchor-is-valid": 0,
 		"jsx-a11y/click-events-have-key-events": 0,
 		"jsx-a11y/no-static-element-interactions": 0,

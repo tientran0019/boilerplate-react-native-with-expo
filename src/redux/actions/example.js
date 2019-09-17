@@ -14,20 +14,19 @@ import { applyURIFilter } from 'src/utils';
 export const MODEL_NAME = 'EXAMPLE';
 export const MODEL_PLURAL = 'examples';
 
-export const create = (payload, next, nextError) => {
+export const create = (payload, next) => {
 	return {
 		type: SINGLE_API,
 		payload: {
 			uri: `/${MODEL_PLURAL}`,
 			params: payload,
 			opt: { method: 'POST' },
-			afterSuccess: next,
-			afterError: nextError,
+			afterFinishing: next,
 		},
 	};
 };
 
-export const update = (payload, next, nextError) => {
+export const update = (payload, next) => {
 	const { id, ...answer } = payload;
 
 	return {
@@ -37,13 +36,12 @@ export const update = (payload, next, nextError) => {
 			params: answer,
 			opt: { method: 'PATCH' },
 			successType: 'UPDATE_' + MODEL_NAME + '_SUCCESS',
-			afterSuccess: next,
-			afterError: nextError,
+			afterFinishing: next,
 		},
 	};
 };
 
-export const getOne = (payload = {}, next, nextError) => {
+export const getOne = (payload = {}, next) => {
 	const { id, filter } = payload;
 
 	return {
@@ -52,13 +50,12 @@ export const getOne = (payload = {}, next, nextError) => {
 			uri: `/${MODEL_PLURAL}/${id}${applyURIFilter(filter)}`,
 			beforeCallType: 'GET_' + MODEL_NAME + '_DATA_REQUEST',
 			successType: 'GET_' + MODEL_NAME + '_DATA_SUCCESS',
-			afterSuccess: next,
-			afterError: nextError,
+			afterFinishing: next,
 		},
 	};
 };
 
-export const getList = (payload = {}, next, nextError) => {
+export const getList = (payload = {}, next) => {
 	const { filter, firstLoad } = payload;
 
 	return {
@@ -67,8 +64,7 @@ export const getList = (payload = {}, next, nextError) => {
 			uri: `/${MODEL_PLURAL}${applyURIFilter(filter)}`,
 			beforeCallType: firstLoad ? 'GET_' + MODEL_NAME + '_LIST_REQUEST' : '',
 			successType: 'GET_' + MODEL_NAME + '_LIST_SUCCESS',
-			afterSuccess: next,
-			afterError: nextError,
+			afterFinishing: next,
 		},
 	};
 };
@@ -83,7 +79,7 @@ export const remove = (payload, next) => {
 			params: id,
 			opt: { method: 'DELETE' },
 			successType: 'DELETE_' + MODEL_NAME + '_SUCCESS',
-			afterSuccess: next,
+			afterFinishing: next,
 		},
 	};
 };

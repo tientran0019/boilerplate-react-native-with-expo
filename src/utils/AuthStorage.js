@@ -9,15 +9,36 @@ import Storage from './Storage';
 
 class AuthStorage extends Storage {
 	get loggedIn() {
-		return !!this.value && !!this.value.token;
+		return (async () => {
+			try {
+				const value = await this.getValue();
+				return Promise.resolve(!!value && !!value.token);
+			} catch (error) {
+				return Promise.reject(error);
+			}
+		})();
 	}
 
 	get token() {
-		return this.value && this.value.token;
+		return (async () => {
+			try {
+				const value = await this.getValue();
+				return Promise.resolve(!!value && value.token);
+			} catch (error) {
+				return Promise.reject(error);
+			}
+		})();
 	}
 
 	get userId() {
-		return this.value && this.value.userId;
+		return (async () => {
+			try {
+				const value = await this.getValue();
+				return Promise.resolve(!!value && value.userId);
+			} catch (error) {
+				return Promise.reject(error);
+			}
+		})();
 	}
 }
 

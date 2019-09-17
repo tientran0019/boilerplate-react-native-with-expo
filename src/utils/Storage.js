@@ -15,26 +15,8 @@ const mandatory = () => {
 class Storage {
 	#name;
 
-	value;
-
 	constructor(name = mandatory()) {
 		this.#name = name;
-	}
-
-	bootstrapAsync = async (next = f => f) => {
-		try {
-			const result = await AsyncStorage.getItem(this.#name);
-			let value = {};
-			try {
-				value = JSON.parse(result);
-			} catch (er) {
-				value = result;
-			}
-			next();
-			this.value = value;
-		} catch (error) {
-			// Error retrieving data
-		}
 	}
 
 	getValue = async (next = f => f) => {
@@ -46,40 +28,38 @@ class Storage {
 			} catch (er) {
 				value = result;
 			}
-			next();
-			this.value = value;
-			return value;
+
+			next(null, value);
+			return Promise.resolve(value);
 		} catch (error) {
 			// Error retrieving data
+			next(error);
+			return Promise.reject(error);
 		}
 	}
 
-	setValue = async (value = mandatory(), next) => {
-		await AsyncStorage.setItem(this.#name, JSON.stringify(value), (err) => {
-			if (err) {
-				console.log('err', err);
-				next(err);
-			} else {
-				this.value = value;
-				if (next && typeof next === 'function') {
-					next();
-				}
-			}
-		});
+	setValue = async (value = mandatory(), next = f => f) => {
+		try {
+			await AsyncStorage.setItem(this.#name, JSON.stringify(value));
+			next(null, value);
+			return Promise.resolve(value);
+		} catch (error) {
+			// Error saving data
+			next(error);
+			return Promise.reject(error);
+		}
 	}
 
-	destroy = async (next) => {
-		await AsyncStorage.removeItem(this.#name, (err) => {
-			if (err) {
-				console.log('err', err);
-				next(err);
-			} else {
-				this.value = {};
-				if (next && typeof next === 'function') {
-					next();
-				}
-			}
-		});
+	destroy = async (next = f => f) => {
+		try {
+			await AsyncStorage.removeItem(this.#name);
+			next(null);
+			return Promise.resolve();
+		} catch (error) {
+			// Error saving data
+			next(error);
+			return Promise.reject(error);
+		}
 	}
 }
 

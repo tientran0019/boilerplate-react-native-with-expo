@@ -16,13 +16,14 @@ import { REQUEST_ERROR } from 'src/redux/actions/type';
 
 const filter = {};
 
-function* authorize(payload, next, nextErr) {
+function* authorize(payload, next = f => f) {
 	const response = yield call(fetchApi, {
 		uri: `/users/login?include=${JSON.stringify(filter)}`,
 		params: payload,
 		opt: { method: 'POST' },
 		loading: false,
 	});
+
 	if (response && !response.error) {
 		const data = {
 			token: response.id,
@@ -30,24 +31,20 @@ function* authorize(payload, next, nextErr) {
 			role: response.user.role,
 		};
 
-		yield call(AuthStorage.setValue, data, next);
+		yield call(AuthStorage.setValue, data);
 
 		yield put({
 			type: 'LOGIN_SUCCESS',
 			payload: response.user,
 		});
 
-		// if (typeof next === 'function') {
-		// 	next();
-		// }
+		next(null, response);
 	} else {
 		yield put({
 			type: 'LOGIN_FAILED',
 			payload: response.error,
 		});
-		if (typeof nextErr === 'function') {
-			nextErr();
-		}
+		next(response.error);
 	}
 }
 
@@ -55,8 +52,8 @@ function* loginFlow() {
 	const INFINITE = true;
 
 	while (INFINITE) {
-		const { payload, next, nextErr } = yield take('LOGIN_REQUEST');
-		const authorizeTask = yield fork(authorize, payload, next, nextErr);
+		const { payload, next } = yield take('LOGIN_REQUEST');
+		const authorizeTask = yield fork(authorize, payload, next);
 		const action = yield take(['LOGOUT_REQUEST', 'LOGIN_FAILED', REQUEST_ERROR]);
 
 		if (action.type === 'LOGOUT_REQUEST') {
@@ -69,7 +66,7 @@ function* loginGoogleFlow() {
 	const INFINITE = true;
 
 	while (INFINITE) {
-		const { payload, next, nextErr } = yield take('LOGIN_GOOGLE');
+		const { payload, next = f => f } = yield take('LOGIN_GOOGLE');
 
 		const response = yield call(fetchApi, {
 			uri: `/users/login-google?include=${JSON.stringify(filter)}`,
@@ -83,20 +80,16 @@ function* loginGoogleFlow() {
 				userId: response.userId,
 				role: response.user.role,
 			};
-			yield call(AuthStorage.setValue, data, next);
+			yield call(AuthStorage.setValue, data);
 
 			yield put({
 				type: 'LOGIN_SUCCESS',
 				payload: response.user,
 			});
 
-			// if (typeof next === 'function') {
-			// 	next();
-			// }
+			next(null, response);
 		} else {
-			if (typeof nextErr === 'function') {
-				nextErr();
-			}
+			next(response.error);
 		}
 	}
 }
@@ -105,7 +98,7 @@ function* loginFacebookFlow() {
 	const INFINITE = true;
 
 	while (INFINITE) {
-		const { payload, next, nextErr } = yield take('LOGIN_FACEBOOK');
+		const { payload, next = f => f } = yield take('LOGIN_FACEBOOK');
 
 		const response = yield call(fetchApi, {
 			uri: `/users/login-facebook?include=${JSON.stringify(filter)}`,
@@ -118,20 +111,16 @@ function* loginFacebookFlow() {
 				userId: response.userId,
 				role: response.user.role,
 			};
-			yield call(AuthStorage.setValue, data, next);
+			yield call(AuthStorage.setValue, data);
 
 			yield put({
 				type: 'LOGIN_SUCCESS',
 				payload: response.user,
 			});
 
-			// if (typeof next === 'function') {
-			// 	next();
-			// }
+			next(null, response);
 		} else {
-			if (typeof nextErr === 'function') {
-				nextErr();
-			}
+			next(response.error);
 		}
 	}
 }
@@ -163,7 +152,7 @@ function* signUpFlow() {
 	const INFINITE = true;
 
 	while (INFINITE) {
-		const { payload, next, nextErr } = yield take('SIGN_UP_REQUEST');
+		const { payload, next = f => f } = yield take('SIGN_UP_REQUEST');
 
 		const response = yield call(fetchApi, {
 			uri: '/users',
@@ -179,13 +168,9 @@ function* signUpFlow() {
 			// if (action.type === 'LOGOUT_REQUEST') {
 			// 	yield cancel(authorizeTask);
 			// }
-			if (typeof next === 'function') {
-				next();
-			}
+			next(null, response);
 		} else {
-			if (typeof nextErr === 'function') {
-				nextErr();
-			}
+			next(response.error);
 		}
 	}
 }

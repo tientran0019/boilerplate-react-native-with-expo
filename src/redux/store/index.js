@@ -20,7 +20,7 @@ import { createLogger } from 'redux-logger';
 import rootReducer, { initialState } from 'src/redux/reducers';
 import rootSaga from 'src/redux/sagas';
 
-import { expo } from '../../../app.json';
+import app from '../../../app.json';
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -44,7 +44,7 @@ const logger = createLogger({
 const persistConfig = {
 	transforms: [immutableTransform()],
 	blacklist: ['loader'],
-	key: expo.name,
+	key: app.name,
 	storage: AsyncStorage,
 };
 
