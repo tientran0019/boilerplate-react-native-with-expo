@@ -2,7 +2,7 @@
   "name": "react-native-boilerplate-with-expo",
   "version": "0.0.1",
   "main": "node_modules/expo/AppEntry.js",
-  "repository": "https://github.com/tientran0019/react-native-boilerplate-with-expo",
+  "repository": "https://github.com/tientran0019/boilerplate-react-native-with-expo",
   "description": "A boilerplate for a react-native app using expo",
   "author": "Trần Đức Tiến <tientran0019@gmail.com>",
   "keywords": [
