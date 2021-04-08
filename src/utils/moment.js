@@ -1,13 +1,18 @@
 /* --------------------------------------------------------
 * Author Trần Đức Tiến
-* Email ductienas@gmail.com
+* Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2019-01-09 22:08:12
+* Created: 2020-03-23 16:47:02
 *------------------------------------------------------- */
+import relativeTime from 'dayjs/plugin/relativeTime';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-import moment from 'moment';
+import dayjs from 'dayjs';
 
-moment.locale('en');
+dayjs.locale('en');
 
-export default moment;
+dayjs.extend(relativeTime);
+dayjs.extend(localizedFormat);
+
+export default dayjs;

@@ -1,32 +1,32 @@
-/*--------------------------------------------------------
- * Author Trần Đức Tiến
- * Email ductienas@gmail.com
- * Phone 0972970075
- *
- * Created: 2019-01-30 15:04:39
- *-------------------------------------------------------*/
-import { fromJS, Map } from 'immutable';
+/* --------------------------------------------------------
+* Author Tien Tran
+* Email tientran0019@gmail.com
+* Phone 0972970075
+*
+* Created: 2021-04-08 20:39:58
+*------------------------------------------------------- */
 
-export const initialState = fromJS({});
+export const initialState = {};
 
-export default (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'LOGIN_SUCCESS':
-			return fromJS(action.payload);
+			return action?.payload?.user || {};
 
 		case 'LOGIN_FAILED':
-			return Map({ error: action.payload.message || action.payload });
+			return { error: action?.payload?.message || action?.payload };
 
 		case 'LOGOUT_SUCCESS':
-			return fromJS({});
+			return {};
 
 		case 'GET_USER_AUTH_SUCCESS':
-			return fromJS(action.payload);
-
 		case 'EDIT_PROFILE_SUCCESS':
-			return fromJS(action.payload);
+		case 'SIGN_UP_SUCCESS':
+			return action.payload;
 
 		default:
 			return state;
 	}
 };
+
+export default reducer;

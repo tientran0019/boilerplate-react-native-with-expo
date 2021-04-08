@@ -1,126 +1,120 @@
-/*--------------------------------------------------------
- * Author Trần Đức Tiến
- * Email ductienas@gmail.com
- * Phone 0972970075
- *
- * LastModified: 2018-01-10 23:15:32
- *-------------------------------------------------------*/
+/* --------------------------------------------------------
+* Author Tien Tran
+* Email tientran0019@gmail.com
+* Phone 0972970075
+*
+* Created: 2021-04-08 20:38:52
+*------------------------------------------------------- */
 
-import AuthStorage from 'src/utils/AuthStorage';
+import AuthStorage from 'src/utils/auth-storage';
 
-import { SINGLE_API, REQUEST_ERROR } from 'src/redux/actions/type';
+import { SINGLE_API/* , REQUEST_ERROR */ } from './types';
 
-export const editProfile = (payload, next) => {
-	const { id, ...user } = payload;
+const filter = {
+	include: 'wallet',
+};
 
+export const actionUpdateProfile = async (payload = {}, next = f => f) => {
 	return {
 		type: SINGLE_API,
 		payload: {
-			uri: '/users/' + id,
-			params: user,
-			opt: { method: 'PATCH' },
+			url: '/users/' + AuthStorage.userId,
+			payload,
 			successType: 'EDIT_PROFILE_SUCCESS',
-			afterFinishing: next,
+			options: {
+				method: 'PATCH',
+			},
+			next,
 		},
 	};
 };
 
-export function loginRequest(payload, next) {
-	return {
-		type: 'LOGIN_REQUEST',
-		payload,
-		next,
-	};
-}
-
-export function loginGoogle(payload, next) {
-	return {
-		type: 'LOGIN_GOOGLE',
-		payload,
-		next,
-	};
-}
-
-export function loginFacebook(payload, next) {
-	return {
-		type: 'LOGIN_FACEBOOK',
-		payload,
-		next,
-	};
-}
-
-export function signUpRequest(payload, next) {
-	return {
-		type: 'SIGN_UP_REQUEST',
-		payload,
-		next,
-	};
-}
-
-export function logoutRequest(next) {
-	return {
-		type: 'LOGOUT_REQUEST',
-		next,
-	};
-}
-
-export const getUserAuth = async (payload, next) => {
-	const userId = await AuthStorage.userId;
-
-	const filter = {};
-
+export const actionLogin = async (payload = {}, next = f => f) => {
 	return {
 		type: SINGLE_API,
 		payload: {
-			uri: '/users/' + userId + `?filter=${JSON.stringify(filter)}`,
+			url: `/users/login?include=${JSON.stringify(filter)}`,
+			options: { method: 'POST' },
+			payload,
+			successType: 'LOGIN_SUCCESS',
+			next: async (err, response = {}) => {
+				if (!err) {
+					AuthStorage.value = {
+						token: response.id,
+						userId: response.userId,
+						typeCourse: response.user.typeCourse || 'offline',
+						role: response.role,
+					};
+				}
+				next(err, response.user || {});
+			},
+		},
+	};
+};
+
+export const actionLogout = async (next = f => f) => {
+	return {
+		type: SINGLE_API,
+		payload: {
+			url: '/users/logout',
+			options: { method: 'POST' },
+			successType: 'LOGOUT_SUCCESS',
+			next: async () => {
+				AuthStorage.destroy();
+				next();
+			},
+		},
+	};
+};
+
+export const actionGetUserAuth = async (next = f => f) => {
+	return {
+		type: SINGLE_API,
+		payload: {
+			url: '/users/' + AuthStorage.userId,
 			successType: 'GET_USER_AUTH_SUCCESS',
-			afterFinishing: next,
+			next,
 		},
 	};
 };
 
-export const resetPassword = (payload, next) => {
+export const actionForgotPassword = async (payload = {}, next = f => f) => {
 	return {
 		type: SINGLE_API,
 		payload: {
-			uri: '/users/reset-password?access_token=' + payload.token,
-			params: { newPassword: payload.password },
-			opt: { method: 'POST' },
-			afterFinishing: next,
+			url: '/users/reset',
+			payload,
+			options: { method: 'POST' },
+			next,
 		},
 	};
 };
 
-export const forgotPassword = (payload, next) => {
+export const actionResetPassword = async (payload = {}, next = f => f) => {
+	const { token, ...params } = payload;
+
 	return {
 		type: SINGLE_API,
 		payload: {
-			uri: '/users/reset',
-			params: { email: payload.email },
-			opt: { method: 'POST' },
-			afterFinishing: next,
+			url: '/users/reset-password?access_token=' + token,
+			payload: params,
+			options: { method: 'POST' },
+			next,
 		},
 	};
 };
 
-export const changePassword = async (payload, next = f => f) => {
-	if (await !AuthStorage.loggedIn) {
-		if (typeof nextError === 'function') {
-			next('Login is required!');
-		}
-		return {
-			type: REQUEST_ERROR,
-			payload: 'Login is required!',
-		};
-	}
+export const actionChangePassword = async (payload = {}, next = f => f) => {
 	const { oldPassword, newPassword } = payload;
+
 	return {
 		type: SINGLE_API,
 		payload: {
-			uri: '/users/change-password',
-			params: { oldPassword, newPassword },
-			opt: { method: 'POST' },
-			afterFinishing: next,
+			url: '/users/change-password',
+			payload: { oldPassword, newPassword },
+			options: { method: 'POST' },
+			successType: 'CHANGE_PASSWORD_SUCCESS',
+			next,
 		},
 	};
 };

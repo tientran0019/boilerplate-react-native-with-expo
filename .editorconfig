@@ -24,6 +24,11 @@ indent_size = 4
 indent_style = space
 indent_size = 2
 
+[app.json]
+# package.json adhere to --save-dev manipulation styles
+indent_style = space
+indent_size = 2
+
 
 [*.{md,yml}]
 indent_style = space

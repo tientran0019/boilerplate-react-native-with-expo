@@ -1,36 +1,37 @@
 /* --------------------------------------------------------
 * Author Trần Đức Tiến
-* Email ductienas@gmail.com
+* Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2019-01-30 15:45:33
+* Created: 2020-04-07 17:45:11
 *------------------------------------------------------- */
-import { REQUEST_ERROR } from 'src/redux/actions/type';
-import { fromJS } from 'immutable';
+
+import { REQUEST_ERROR } from 'src/redux/actions/types';
 
 import { Alert } from 'react-native';
 
-export const initialState = fromJS({
+export const initialState = {
 	sending: false,
-});
+};
 
 export default function (state = initialState, action) {
 	switch (action.type) {
 		case 'TOGGLE_LOADING':
-			return fromJS({ sending: !state.toJS().sending });
+			return { sending: !state.sending };
 		case 'START_LOADING':
-			return fromJS({ sending: true });
+			return { sending: true };
 
 		case 'STOP_LOADING':
-			return fromJS({ sending: false });
-		case 'LOGIN_FAILED':
+			return { sending: false };
 		case REQUEST_ERROR: {
-			Alert.alert(
-				'Error',
-				action.payload.message || action.payload,
-			);
+			setTimeout(() => {
+				Alert.alert(
+					'Request Error!',
+					action?.payload?.message || action.payload,
+				);
+			}, 200);
 
-			return fromJS({ sending: false, error: action.payload });
+			return { sending: false, error: action.payload };
 		}
 		default:
 			return state;

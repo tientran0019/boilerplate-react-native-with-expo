@@ -1,9 +1,9 @@
 /* --------------------------------------------------------
 * Author Trần Đức Tiến
-* Email ductienas@gmail.com
+* Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2017-12-15 23:36:23
+* Created: 2020-03-23 16:46:54
 *------------------------------------------------------- */
 
 import { AsyncStorage } from 'react-native';

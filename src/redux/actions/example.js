@@ -1,85 +1,117 @@
 /* --------------------------------------------------------
-* Author Trần Đức Tiến
-* Email ductienas@gmail.com
+* Author Tien Tran
+* Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2018-03-06 01:03:01
+* Created: 2021-04-08 20:39:26
 *------------------------------------------------------- */
 
-import { SINGLE_API } from 'src/redux/actions/type';
-// import AuthStorage from 'src/utils/AuthStorage';
+import { SINGLE_API, CHAIN_API, PARALLEL_API } from 'src/redux/actions/types';
 
-import { applyURIFilter } from 'src/utils';
+import fetchAPI from 'src/utils/fetch-api';
 
-export const MODEL_NAME = 'EXAMPLE';
-export const MODEL_PLURAL = 'examples';
+/* Normal action
+*------------------------------------------------------- */
 
-export const create = (payload, next) => {
+export const test = (payload, next) => async (dispatch, getState) => {
+	const res = await fetchAPI({ url: `users/${payload.id}` });
+	return dispatch({ type: 'GET_PROFILE_DATA_SUCCESS', payload: res });
+};
+
+
+/* SINGLE_API
+*------------------------------------------------------- */
+export const testSignApi = (payload, next = f => f) => {
 	return {
 		type: SINGLE_API,
 		payload: {
-			uri: `/${MODEL_PLURAL}`,
-			params: payload,
-			opt: { method: 'POST' },
-			afterFinishing: next,
+			url: '/test',
+			payload,
+			options: { method: 'POST' },
+			successType: 'SIGN_UP_SUCCESS',
+			errorType: 'SIGN_UP_FAILED',
+			next,
 		},
 	};
 };
 
-export const update = (payload, next) => {
-	const { id, ...answer } = payload;
+/* CHAIN_API
+*------------------------------------------------------- */
 
-	return {
-		type: SINGLE_API,
-		payload: {
-			uri: `/${MODEL_PLURAL}/${id}`,
-			params: answer,
-			opt: { method: 'PATCH' },
-			successType: 'UPDATE_' + MODEL_NAME + '_SUCCESS',
-			afterFinishing: next,
-		},
-	};
-};
+// export function testChainApi(payload, next) {
+// 	return {
+// 		type: CHAIN_API,
+// 		payload: {
+// 			listApi: [
+// 				() => ({
+// 					method: 'POST',
+// 					path: 'users',
+// 					params: payload,
+// 				}),
+// 				(res) => ({
+// 					method: 'POST',
+// 					path: 'users/login',
+// 					params: payload,
+// 				}),
+// 				(res) => ({
+// 					method: 'GET',
+// 					path: `users/${res[1].userData.id}`,
+// 				}),
+// 			],
+// 			successType: 'LOGIN_SUCCESS',
+// 			errorType: 'LOGIN_FAILED',
+// 			afterSuccess: (response) => {
+// 				const data = {
+// 					token: response[1].id,
+// 					userId: response[1].userId,
+// 					loginType: response[1].userData.loginType,
+// 				};
 
-export const getOne = (payload = {}, next) => {
-	const { id, filter } = payload;
+// 				if (typeof next === 'function') {
+// 					next();
+// 				}
+// 			},
+// 		},
+// 	};
+// }
 
-	return {
-		type: SINGLE_API,
-		payload: {
-			uri: `/${MODEL_PLURAL}/${id}${applyURIFilter(filter)}`,
-			beforeCallType: 'GET_' + MODEL_NAME + '_DATA_REQUEST',
-			successType: 'GET_' + MODEL_NAME + '_DATA_SUCCESS',
-			afterFinishing: next,
-		},
-	};
-};
 
-export const getList = (payload = {}, next) => {
-	const { filter, firstLoad } = payload;
+// /* PARALLEL_API
+// *------------------------------------------------------- */
 
-	return {
-		type: SINGLE_API,
-		payload: {
-			uri: `/${MODEL_PLURAL}${applyURIFilter(filter)}`,
-			beforeCallType: firstLoad ? 'GET_' + MODEL_NAME + '_LIST_REQUEST' : '',
-			successType: 'GET_' + MODEL_NAME + '_LIST_SUCCESS',
-			afterFinishing: next,
-		},
-	};
-};
+// export function testParallelApi(payload, next) {
+// 	return {
+// 		type: PARALLEL_API,
+// 		payload: {
+// 			listApi: [
+// 				() => ({
+// 					method: 'POST',
+// 					path: 'users',
+// 					params: payload,
+// 				}),
+// 				() => ({
+// 					method: 'POST',
+// 					path: 'users/login',
+// 					params: payload,
+// 				}),
+// 				() => ({
+// 					method: 'GET',
+// 					path: `users/${res[1].userData.id}`,
+// 				}),
+// 			],
+// 			successType: 'LOGIN_SUCCESS',
+// 			errorType: 'LOGIN_FAILED',
+// 			afterSuccess: (response) => {
+// 				const data = {
+// 					token: response[1].id,
+// 					userId: response[1].userId,
+// 					loginType: response[1].userData.loginType,
+// 				};
 
-export const remove = (payload, next) => {
-	const { id } = payload;
-
-	return {
-		type: SINGLE_API,
-		payload: {
-			uri: `/${MODEL_PLURAL}/${id}`,
-			params: id,
-			opt: { method: 'DELETE' },
-			successType: 'DELETE_' + MODEL_NAME + '_SUCCESS',
-			afterFinishing: next,
-		},
-	};
-};
+// 				if (typeof next === 'function') {
+// 					next();
+// 				}
+// 			},
+// 		},
+// 	};
+// }

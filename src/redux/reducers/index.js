@@ -1,25 +1,26 @@
 /* --------------------------------------------------------
 * Author Trần Đức Tiến
-* Email ductienas@gmail.com
+* Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2017-12-16 00:42:57
+* Created: 2020-01-07 19:09:21
 *------------------------------------------------------- */
-import auth, { initialState as initialAuth } from './auth';
+
+import { combineReducers } from 'redux';
+
+import auth, { initialState as authInitial } from './auth';
 import loader, { initialState as initialLoader } from './loader';
 
-import example, { initialState as initialExample } from './example';
-
 export const initialState = {
-	auth: initialAuth,
+	auth: authInitial,
 	loader: initialLoader,
-
-	example: initialExample,
 };
 
-export default {
+const appReducer = combineReducers({
 	auth,
 	loader,
+});
 
-	example,
+export default (state, action) => {
+	return appReducer(action.type === 'LOGOUT_SUCCESS' ? initialState : state, action);
 };

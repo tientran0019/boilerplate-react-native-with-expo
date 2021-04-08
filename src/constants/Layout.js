@@ -1,18 +1,18 @@
 /* --------------------------------------------------------
-* Author Trần Đức Tiến
+* Author Tien Tran
 * Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2019-09-04 10:28:47
+* Created: 2021-04-08 20:51:02
 *------------------------------------------------------- */
 
-
 import { Dimensions } from 'react-native';
+import Constants from 'expo-constants';
 
-const { width } = Dimensions.get('window');
-const { height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default {
+	statusBarHeight: Constants.statusBarHeight,
 	window: {
 		width,
 		height,
