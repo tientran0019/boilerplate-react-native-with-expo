@@ -45,6 +45,11 @@ export default ({ config }) => {
 			'buildNumber': buildNumber.toString(),
 			'bundleIdentifier': identifier,
 			'userInterfaceStyle': 'light',
+			'infoPlist': {
+				'NSCameraUsageDescription': 'This app uses your camera to scan barcodes, take a picture or take an avatar for your profile.',
+				'NSPhotoLibraryUsageDescription': 'This app uses your library to allow you to upload pictures of your items.',
+				'NSPhotoLibraryAddUsageDescription': 'This app uses your camera roll to allow you to upload pictures of your items.',
+			},
 		},
 		'android': {
 			'userInterfaceStyle': 'light',
@@ -54,6 +59,12 @@ export default ({ config }) => {
 			},
 			'package': identifier,
 			'versionCode': buildNumber,
+			'permissions': [
+				'CAMERA',
+				'CAMERA_ROLL', 
+				'READ_INTERNAL_STORAGE',
+				'WRITE_INTERNAL_STORAGE', 
+			],
 		},
 	};
 
