@@ -61,9 +61,9 @@ export default ({ config }) => {
 			'versionCode': buildNumber,
 			'permissions': [
 				'CAMERA',
-				'CAMERA_ROLL', 
+				'CAMERA_ROLL',
 				'READ_INTERNAL_STORAGE',
-				'WRITE_INTERNAL_STORAGE', 
+				'WRITE_INTERNAL_STORAGE',
 			],
 		},
 	};

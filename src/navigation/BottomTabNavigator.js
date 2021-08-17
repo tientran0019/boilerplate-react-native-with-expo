@@ -55,7 +55,7 @@ function LinksNavigator() {
 			}}
 		>
 			<LinksStack.Screen
-				name="Links"
+				name="Link"
 				component={LinksScreen}
 			/>
 		</LinksStack.Navigator>
@@ -86,36 +86,36 @@ export default function BottomTabNavigator() {
 	return (
 		<BottomTab.Navigator
 			initialRouteName="Home"
-			tabBarOptions={{
-				activeTintColor: colors[colorScheme].primary,
-				style: {
-					// height: 64,
-				},
-				tabStyle: {
-					paddingBottom: 5,
-				},
-			}}
 			screenOptions={{
 				...screenOptionsDefault,
+				lazy: true,
+				tabBarOptions: {
+					activeTintColor: colors[colorScheme].primary,
+					style: {
+						// height: 64,
+					},
+					tabStyle: {
+						paddingBottom: 5,
+					},
+				},
 			}}
-			lazy
 		>
 			<BottomTab.Screen
-				name="Home"
+				name="HomeRoot"
 				component={HomeNavigator}
 				options={{
 					tabBarIcon: ({ color }) => <AntDesign name="home" size={26} style={{ marginBottom: -3, marginTop: 0 }} color={color} />,
 				}}
 			/>
 			<BottomTab.Screen
-				name="Links"
+				name="LinksRoot"
 				component={LinksNavigator}
 				options={{
 					tabBarIcon: ({ color }) => <MaterialIcons name="link" size={28} style={{ marginBottom: -3, marginTop: 0 }} color={color} />,
 				}}
 			/>
 			<BottomTab.Screen
-				name="Settings"
+				name="SettingsRoot"
 				component={SettingsNavigator}
 				options={{
 					tabBarIcon: ({ color }) => <Feather name="user" size={26} style={{ marginBottom: -3, marginTop: 0 }} color={color} />,
