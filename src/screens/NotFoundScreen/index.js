@@ -54,7 +54,7 @@ const NotFoundScreen = (props) => {
 				resizeMode="contain"
 				source={require('./images/img.png')}
 			/>
-			<Text style={styles.title}>This screen doesn't exist.</Text>
+			<Text style={styles.title}>This screen doesn&apos;t exist.</Text>
 			<TouchableOpacity onPress={() => navigation.replace('Root')} style={styles.link}>
 				<Text color="primary">Go to home screen!</Text>
 			</TouchableOpacity>

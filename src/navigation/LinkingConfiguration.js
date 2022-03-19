@@ -1,24 +1,38 @@
+/**
+ * Learn more about deep linking with React Navigation
+ * https://reactnavigation.org/docs/deep-linking
+ * https://reactnavigation.org/docs/configuring-links
+ */
+
 import * as Linking from 'expo-linking';
 
-export default {
+const linking = {
 	prefixes: [Linking.makeUrl('/')],
 	config: {
 		screens: {
 			Root: {
 				screens: {
-					TabOne: {
+					HomeRoot: {
 						screens: {
-							TabOneScreen: 'one',
+							Home: 'hone',
 						},
 					},
-					TabTwo: {
+					LinksRoot: {
 						screens: {
-							TabTwoScreen: 'two',
+							Links: 'links',
+						},
+					},
+					SettingsRoot: {
+						screens: {
+							Settings: 'settings',
 						},
 					},
 				},
 			},
+			Modal: 'modal',
 			NotFound: '*',
 		},
 	},
 };
+
+export default linking;

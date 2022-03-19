@@ -113,7 +113,7 @@ function handleHelpPress() {
 	);
 }
 
-function DevelopmentModeNotice() {
+const DevelopmentModeNotice = () => {
 	if (__DEV__) {
 		const learnMoreButton = (
 			<Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
@@ -133,9 +133,9 @@ function DevelopmentModeNotice() {
 			You are not in development mode: your app will run at full speed.
 		</Text>
 	);
-}
+};
 
-export default function HomeScreen() {
+const HomeScreen = () => {
 	return (
 		<View style={styles.container}>
 			<ScrollView
@@ -193,8 +193,10 @@ export default function HomeScreen() {
 			</View>
 		</View>
 	);
-}
+};
 
 HomeScreen.navigationOptions = {
 	header: null,
 };
+
+export default HomeScreen;

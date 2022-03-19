@@ -154,11 +154,11 @@ export default ({ dispatch/* , getState */ }) => next => action => {
 		case SINGLE_API:
 			return singleApi(action.payload, dispatch);
 
-		// case CHAIN_API:
-		// 	return chainApi(action.payload, dispatch);
+			// case CHAIN_API:
+			// 	return chainApi(action.payload, dispatch);
 
-		// case PARALLEL_API:
-		// 	return parallelApi(action.payload, dispatch);
+			// case PARALLEL_API:
+			// 	return parallelApi(action.payload, dispatch);
 
 		default:
 			return next(action);

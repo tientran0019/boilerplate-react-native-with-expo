@@ -3,30 +3,47 @@
 * Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2021-04-08 20:24:39
+* Created: 2022-03-18 10:22:08
 *------------------------------------------------------- */
-
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import * as SplashScreen from 'expo-splash-screen';
+import Toast from '@zellosoft.com/react-native-toast-message';
 
+import useCachedResources from 'src/hooks/useCachedResources';
 import useColorScheme from 'src/hooks/useColorScheme';
 import Navigation from 'src/navigation';
 
 import ReduxProvider from 'src/redux';
 
-export default function App() {
-	const colorScheme = useColorScheme();
+import { LogBox } from 'react-native';
 
-	React.useEffect(() => {
-		SplashScreen.preventAutoHideAsync();
-	}, []);
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();// Ignore all log notifications
+
+const App = () => {
+	const colorScheme = useColorScheme();
+	const [isLoadingComplete, loggedIn] = useCachedResources();
+
+	if (!isLoadingComplete) {
+		return null;
+	}
 
 	return (
-		<ReduxProvider>
+		<>
 			<SafeAreaProvider>
-				<Navigation colorScheme={colorScheme} />
+				<Navigation colorScheme={colorScheme} loggedIn={loggedIn} />
 			</SafeAreaProvider>
+			<Toast ref={(ref) => Toast.setRef(ref)} />
+		</>
+	);
+};
+
+const Wrapper = () => {
+	return (
+		<ReduxProvider>
+			<App />
 		</ReduxProvider>
 	);
-}
+};
+
+export default Wrapper;

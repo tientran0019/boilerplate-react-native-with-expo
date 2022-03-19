@@ -1,9 +1,9 @@
 /* --------------------------------------------------------
-* Author Trần Đức Tiến
+* Author Tien Tran
 * Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2020-12-26 11:09:31
+* Created: 2022-03-19 06:20:58
 *------------------------------------------------------- */
 import { Ionicons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
@@ -46,6 +46,7 @@ export default function useCheckLogin() {
 			}
 		} catch (e) {
 			// We might want to provide this error information to an error reporting service
+			// eslint-disable-next-line no-console
 			console.warn(e);
 		} finally {
 			setLoadingComplete(true);

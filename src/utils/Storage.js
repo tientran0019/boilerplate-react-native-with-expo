@@ -6,7 +6,7 @@
 * Created: 2020-03-23 16:46:54
 *------------------------------------------------------- */
 
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const mandatory = () => {
 	throw new Error('Missing parameter!');

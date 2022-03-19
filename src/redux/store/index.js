@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* --------------------------------------------------------
 * Author Trần Đức Tiến
 * Email tientran0019@gmail.com
@@ -5,7 +6,7 @@
 *
 * Created: 2020-04-07 17:33:54
 *------------------------------------------------------- */
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
@@ -18,6 +19,7 @@ import apiMiddleware from 'src/redux/thunk/middleware';
 
 import Constants from 'expo-constants';
 
+// eslint-disable-next-line no-unused-vars
 const logger = createLogger({
 	collapsed: (getState, action, logEntry) => !logEntry.error,
 	// predicate: (getState, action) => !['@@redux-form/CHANGE', '@@redux-form/REGISTER_FIELD'].includes(action.type),

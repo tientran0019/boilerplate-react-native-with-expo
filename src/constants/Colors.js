@@ -5,49 +5,25 @@
 *
 * Created: 2021-04-08 20:49:16
 *------------------------------------------------------- */
+const tintColorLight = '#2f95dc';
+const tintColorDark = '#fff';
 
 export const colors = {
 	light: {
-		errorBackground: '#e23939',
-		errorText: '#fff',
-		warningBackground: '#EAEB5E',
-		warningText: '#666804',
-		successBackground: '#49b35b',
-		successText: '#fff',
-		noticeText: '#fff',
-		primary: '#219653',
-		primaryContrast: '#fff',
-		bgPrimary: '#fff',
-		black: '#151522',
-		gray1: '#333333',
-		gray2: '#666666',
-		gray3: '#999999',
-		gray4: '#E0E0E0',
-		white: '#fff',
-		borderColor: '#EFEFEF',
-		borderColorComponent: '#E0E0E0',
-		bgDisableComponent: '#F2F3F5',
+		text: '#000',
+		background: '#fff',
+		tint: tintColorLight,
+		primary: tintColorLight,
+		tabIconDefault: '#ccc',
+		tabIconSelected: tintColorLight,
 	},
 	dark: {
-		errorBackground: '#e23939',
-		errorText: '#fff',
-		warningBackground: '#EAEB5E',
-		warningText: '#666804',
-		successBackground: '#49b35b',
-		successText: '#fff',
-		noticeText: '#fff',
-		primary: '#219653',
-		primaryContrast: '#fff',
-		bgPrimary: '#fff',
-		black: '#151522',
-		gray1: '#333333',
-		gray2: '#666666',
-		gray3: '#999999',
-		gray4: '#E0E0E0',
-		white: '#fff',
-		borderColor: '#EFEFEF',
-		borderColorComponent: '#E0E0E0',
-		bgDisableComponent: '#F2F3F5',
+		text: '#fff',
+		background: '#000',
+		tint: tintColorDark,
+		primary: tintColorDark,
+		tabIconDefault: '#ccc',
+		tabIconSelected: tintColorDark,
 	},
 };
 

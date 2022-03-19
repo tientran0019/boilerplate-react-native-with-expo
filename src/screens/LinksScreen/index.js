@@ -9,8 +9,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 	},
 });
-
-export default function LinksScreen() {
+const LinksScreen = () => {
 	return (
 		<ScrollView style={styles.container}>
 			{/**
@@ -20,8 +19,10 @@ export default function LinksScreen() {
 			<ExpoLinksView />
 		</ScrollView>
 	);
-}
+};
 
 LinksScreen.navigationOptions = {
 	title: 'Links',
 };
+
+export default LinksScreen;

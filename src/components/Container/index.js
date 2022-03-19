@@ -10,7 +10,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useHeaderHeight } from '@react-navigation/stack';
+import { useHeaderHeight } from '@react-navigation/native-stack';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
