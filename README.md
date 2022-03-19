@@ -33,6 +33,8 @@ WEB_URL=https://example.com
 
 `process.env` now has the keys and values you defined in your `.env` file.
 
+If you need more than one environment. Let's create a `.env.production` file for the production environment.
+
 #### 3. Open RNS with Expo
 
 First, you need to install Expo CLI (if you don't have it yet). You can do it by running the following command in terminal:

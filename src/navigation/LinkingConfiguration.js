@@ -19,7 +19,7 @@ const linking = {
 					},
 					LinksRoot: {
 						screens: {
-							Links: 'links',
+							Link: 'links',
 						},
 					},
 					SettingsRoot: {
