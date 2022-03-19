@@ -7,7 +7,7 @@
 *------------------------------------------------------- */
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Toast from '@zellosoft.com/react-native-toast-message';
+// import Toast from '@zellosoft.com/react-native-toast-message';
 
 import useCachedResources from 'src/hooks/useCachedResources';
 import useColorScheme from 'src/hooks/useColorScheme';
@@ -33,7 +33,7 @@ const App = () => {
 			<SafeAreaProvider>
 				<Navigation colorScheme={colorScheme} loggedIn={loggedIn} />
 			</SafeAreaProvider>
-			<Toast ref={(ref) => Toast.setRef(ref)} />
+			{/* <Toast ref={(ref) => Toast.setRef(ref)} /> */}
 		</>
 	);
 };

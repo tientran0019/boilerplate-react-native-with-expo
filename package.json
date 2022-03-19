@@ -27,6 +27,7 @@
     "reset": "expo r -c",
     "build:ios": "NODE_ENV=production expo build:ios --release-channel production",
     "build:android": "NODE_ENV=production expo build:android --release-channel production",
+    "build:web": "NODE_ENV=production expo build:web",
     "push": "expo publish",
     "push:prod": "NODE_ENV=production expo publish --release-channel production"
   },
