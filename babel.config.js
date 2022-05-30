@@ -6,6 +6,11 @@ module.exports = function (api) {
 			'babel-preset-expo',
 		],
 		plugins: [
+			['transform-inline-environment-variables', {
+				'include': [
+					'NODE_ENV',
+				],
+			}],
 			[
 				'module-resolver',
 				{
@@ -25,6 +30,7 @@ module.exports = function (api) {
 					],
 				},
 			],
+			['import', { libraryName: '@zellosoft/antd-react-native' }],
 		],
 	};
 };

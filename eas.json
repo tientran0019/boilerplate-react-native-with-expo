@@ -1,0 +1,27 @@
+{
+	"build": {
+		"development": {
+			"developmentClient": true,
+			"distribution": "internal"
+		},
+		"preview": {
+			"distribution": "internal",
+			"android": {
+				"buildType": "apk"
+			}
+		},
+		"production": {
+			"releaseChannel": "production",
+			"env": {
+				"APP_ENV": "production"
+			}
+		}
+	},
+	"cli": {
+		"version": ">= 0.52.0",
+		"requireCommit": false
+	},
+	"submit": {
+		"production": {}
+	}
+}

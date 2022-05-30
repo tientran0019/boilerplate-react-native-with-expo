@@ -1,10 +1,11 @@
 /* --------------------------------------------------------
-* Author Trần Đức Tiến
+* Author Tien Tran
 * Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2020-06-26 10:14:11
+* Created: 2022-05-30 21:52:31
 *------------------------------------------------------- */
+
 const isDev = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
 
 // eslint-disable-next-line import/no-extraneous-dependencies

@@ -1,120 +1,133 @@
 /* --------------------------------------------------------
+
 * Author Tien Tran
 * Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2021-04-08 20:38:52
+* Created: 2021-09-28 22:42:09
 *------------------------------------------------------- */
 
 import AuthStorage from 'src/utils/auth-storage';
+// eslint-disable-next-line import/no-cycle
 
-import { SINGLE_API/* , REQUEST_ERROR */ } from './types';
+export const actionUpdateProfile = (payload = {}, next = f => f) => async (dispatch, getState) => {
+	const userId = await AuthStorage.userId;
 
-const filter = {
-	include: 'wallet',
+	dispatch({
+		type: 'EDIT_USER_SUCCESS',
+		payload: {
+			...payload,
+			id: userId,
+		},
+	});
+	dispatch({
+		type: 'EDIT_PROFILE_SUCCESS',
+		payload: {
+			...payload,
+			id: userId,
+		},
+	});
+
+	next();
+
+	return null;
 };
 
-export const actionUpdateProfile = async (payload = {}, next = f => f) => {
-	return {
-		type: SINGLE_API,
-		payload: {
-			url: '/users/' + AuthStorage.userId,
-			payload,
-			successType: 'EDIT_PROFILE_SUCCESS',
-			options: {
-				method: 'PATCH',
-			},
-			next,
-		},
-	};
+export const actionLogin = (payload = {}, next = f => f) => async (dispatch, getState) => {
+	const users = getState()?.users;
+
+	const u = users.find(el => {
+		return el.email === payload.email;
+	});
+
+	if (!u) {
+		throw new Error('User not found');
+	}
+	if (u.password !== payload.password) {
+		throw new Error('Password is not correct');
+	}
+
+	await AuthStorage.setValue({
+		accessToken: +new Date(),
+		refreshToken: +new Date(),
+		userId: u.id,
+	});
+
+	dispatch({
+		type: 'LOGIN_SUCCESS',
+		payload: u,
+	});
+
+	next(null, u || {});
+
+	return u;
 };
 
-export const actionLogin = async (payload = {}, next = f => f) => {
-	return {
-		type: SINGLE_API,
-		payload: {
-			url: `/users/login?include=${JSON.stringify(filter)}`,
-			options: { method: 'POST' },
-			payload,
-			successType: 'LOGIN_SUCCESS',
-			next: async (err, response = {}) => {
-				if (!err) {
-					AuthStorage.value = {
-						token: response.id,
-						userId: response.userId,
-						typeCourse: response.user.typeCourse || 'offline',
-						role: response.role,
-					};
-				}
-				next(err, response.user || {});
-			},
-		},
+export const actionSignUp = (payload = {}, next = f => f) => async (dispatch, getState) => {
+	const users = getState()?.users;
+
+	const u = users.find(el => {
+		return el.email === payload.email;
+	});
+
+	if (u) {
+		throw new Error('User is existed');
+	}
+
+	const user = {
+		...payload,
+		id: payload.email,
+		createdAt: new Date(),
 	};
+
+	dispatch({
+		type: 'CREATE_USER_SUCCESS',
+		payload: user,
+	});
+
+	await AuthStorage.setValue({
+		accessToken: +new Date(),
+		refreshToken: +new Date(),
+		userId: payload.email,
+	});
+
+	dispatch({
+		type: 'LOGIN_SUCCESS',
+		payload: user,
+	});
+
+	next(null, user || {});
+
+	return user;
 };
 
-export const actionLogout = async (next = f => f) => {
-	return {
-		type: SINGLE_API,
-		payload: {
-			url: '/users/logout',
-			options: { method: 'POST' },
-			successType: 'LOGOUT_SUCCESS',
-			next: async () => {
-				AuthStorage.destroy();
-				next();
-			},
-		},
-	};
+export const actionLogout = (next = f => f) => async (dispatch, getState) => {
+	await AuthStorage.destroy();
+	global.currentUser = {};
+
+	dispatch({
+		type: 'LOGOUT_SUCCESS',
+	});
+
+	next();
+
+	return null;
 };
 
-export const actionGetUserAuth = async (next = f => f) => {
-	return {
-		type: SINGLE_API,
-		payload: {
-			url: '/users/' + AuthStorage.userId,
-			successType: 'GET_USER_AUTH_SUCCESS',
-			next,
-		},
-	};
-};
+export const actionGetUserAuth = (next = f => f) => async (dispatch, getState) => {
+	const users = getState()?.users;
+	const userId = await AuthStorage.userId;
 
-export const actionForgotPassword = async (payload = {}, next = f => f) => {
-	return {
-		type: SINGLE_API,
-		payload: {
-			url: '/users/reset',
-			payload,
-			options: { method: 'POST' },
-			next,
-		},
-	};
-};
+	const u = users.find(el => {
+		return el.id === userId;
+	});
 
-export const actionResetPassword = async (payload = {}, next = f => f) => {
-	const { token, ...params } = payload;
+	dispatch({
+		type: 'GET_USER_AUTH_SUCCESS',
+		payload: u,
+	});
 
-	return {
-		type: SINGLE_API,
-		payload: {
-			url: '/users/reset-password?access_token=' + token,
-			payload: params,
-			options: { method: 'POST' },
-			next,
-		},
-	};
-};
+	next(null, u || {});
 
-export const actionChangePassword = async (payload = {}, next = f => f) => {
-	const { oldPassword, newPassword } = payload;
-
-	return {
-		type: SINGLE_API,
-		payload: {
-			url: '/users/change-password',
-			payload: { oldPassword, newPassword },
-			options: { method: 'POST' },
-			successType: 'CHANGE_PASSWORD_SUCCESS',
-			next,
-		},
-	};
+	return u;
 };

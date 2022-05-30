@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
 
-import Text from 'src/components/Text';
+import Text from 'src/components/UIDisplay/Text';
 
 const styles = StyleSheet.create({
 	container: {

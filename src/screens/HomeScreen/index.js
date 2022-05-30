@@ -5,21 +5,20 @@ import {
 	Platform,
 	ScrollView,
 	StyleSheet,
-	Text,
 	TouchableOpacity,
-	View,
 } from 'react-native';
 
-import MonoText from 'src/components/Text';
+import Text from 'src/components/UIDisplay/Text';
+import View from 'src/components/UIDisplay/View';
+import Container from 'src/components/Layout/Container';
+import ToggleTheme from 'src/components/Layout/ToggleTheme';
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
 	},
 	developmentModeText: {
 		marginBottom: 20,
-		color: 'rgba(0,0,0,0.4)',
 		fontSize: 14,
 		lineHeight: 19,
 		textAlign: 'center',
@@ -47,16 +46,13 @@ const styles = StyleSheet.create({
 		marginVertical: 7,
 	},
 	codeHighlightText: {
-		color: 'rgba(96,100,109, 0.8)',
 	},
 	codeHighlightContainer: {
-		backgroundColor: 'rgba(0,0,0,0.05)',
 		borderRadius: 3,
 		paddingHorizontal: 4,
 	},
 	getStartedText: {
 		fontSize: 17,
-		color: 'rgba(96,100,109, 1)',
 		lineHeight: 24,
 		textAlign: 'center',
 	},
@@ -77,12 +73,10 @@ const styles = StyleSheet.create({
 			},
 		}),
 		alignItems: 'center',
-		backgroundColor: '#fbfbfb',
 		paddingVertical: 20,
 	},
 	tabBarInfoText: {
 		fontSize: 17,
-		color: 'rgba(96,100,109, 1)',
 		textAlign: 'center',
 	},
 	navigationFilename: {
@@ -97,7 +91,6 @@ const styles = StyleSheet.create({
 	},
 	helpLinkText: {
 		fontSize: 14,
-		color: '#2e78b7',
 	},
 });
 
@@ -137,11 +130,21 @@ const DevelopmentModeNotice = () => {
 
 const HomeScreen = () => {
 	return (
-		<View style={styles.container}>
+		<Container
+			scrollable={false}
+		>
 			<ScrollView
 				style={styles.container}
 				contentContainerStyle={styles.contentContainer}
 			>
+				<View
+					style={{
+						alignSelf: 'center',
+						marginBottom: 20,
+					}}
+				>
+					<ToggleTheme />
+				</View>
 				<View style={styles.welcomeContainer}>
 					<Image
 						source={
@@ -161,7 +164,7 @@ const HomeScreen = () => {
 					<View
 						style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
 					>
-						<MonoText>screens/HomeScreen.js</MonoText>
+						<Text>screens/HomeScreen.js</Text>
 					</View>
 
 					<Text style={styles.getStartedText}>
@@ -186,12 +189,12 @@ const HomeScreen = () => {
 				<View
 					style={[styles.codeHighlightContainer, styles.navigationFilename]}
 				>
-					<MonoText style={styles.codeHighlightText}>
+					<Text style={styles.codeHighlightText}>
 						navigation/MainTabNavigator.js
-					</MonoText>
+					</Text>
 				</View>
 			</View>
-		</View>
+		</Container>
 	);
 };
 

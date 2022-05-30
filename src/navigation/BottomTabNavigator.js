@@ -16,8 +16,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Pressable } from 'react-native';
 
-import { colors } from 'src/constants/colors';
-import useColorScheme from 'src/hooks/useColorScheme';
+import { useTheme } from '@zellosoft/antd-react-native/lib/style';
 
 import HomeScreen from 'src/screens/HomeScreen';
 import LinksScreen from 'src/screens/LinksScreen';
@@ -32,12 +31,13 @@ const BottomTab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
 
 function HomeNavigator() {
-	const colorScheme = useColorScheme();
+	const theme = useTheme();
+	const configsDefault = screenOptionsDefault(theme);
 
 	return (
 		<HomeStack.Navigator
 			screenOptions={{
-				...screenOptionsDefault,
+				...configsDefault,
 			}}
 		>
 			<HomeStack.Screen
@@ -56,7 +56,6 @@ function HomeNavigator() {
 								<FontAwesome
 									name="info-circle"
 									size={25}
-									color={colors[colorScheme].text}
 									style={{ marginRight: 15 }}
 								/>
 							</Pressable>
@@ -71,10 +70,13 @@ function HomeNavigator() {
 const LinksStack = createNativeStackNavigator();
 
 function LinksNavigator() {
+	const theme = useTheme();
+	const configsDefault = screenOptionsDefault(theme);
+
 	return (
 		<LinksStack.Navigator
 			screenOptions={{
-				...screenOptionsDefault,
+				...configsDefault,
 			}}
 		>
 			<LinksStack.Screen
@@ -88,10 +90,13 @@ function LinksNavigator() {
 const SettingsStack = createNativeStackNavigator();
 
 function SettingsNavigator() {
+	const theme = useTheme();
+	const configsDefault = screenOptionsDefault(theme);
+
 	return (
 		<SettingsStack.Navigator
 			screenOptions={{
-				...screenOptionsDefault,
+				...configsDefault,
 			}}
 		>
 			<SettingsStack.Screen
@@ -104,23 +109,15 @@ function SettingsNavigator() {
 }
 
 export default function BottomTabNavigator() {
-	const colorScheme = useColorScheme();
+	const theme = useTheme();
+	const configsDefault = screenOptionsDefault(theme);
 
 	return (
 		<BottomTab.Navigator
 			initialRouteName="Home"
 			screenOptions={{
-				...screenOptionsDefault,
+				...configsDefault,
 				lazy: true,
-				tabBarOptions: {
-					activeTintColor: colors[colorScheme].primary,
-					style: {
-						// height: 64,
-					},
-					tabStyle: {
-						paddingBottom: 5,
-					},
-				},
 			}}
 		>
 			<BottomTab.Screen

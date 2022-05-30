@@ -19,23 +19,22 @@ class Storage {
 		this.#name = name;
 	}
 
-	getValue = async (next = f => f) => {
-		try {
-			const result = await AsyncStorage.getItem(this.#name);
-			let value = {};
+	get value() {
+		return (async () => {
 			try {
-				value = JSON.parse(result);
-			} catch (er) {
-				value = result;
-			}
+				const result = await AsyncStorage.getItem(this.#name);
+				let value = {};
+				try {
+					value = JSON.parse(result);
+				} catch (er) {
+					value = result;
+				}
 
-			next(null, value);
-			return Promise.resolve(value);
-		} catch (error) {
-			// Error retrieving data
-			next(error);
-			return Promise.reject(error);
-		}
+				return Promise.resolve(value);
+			} catch (error) {
+				return Promise.reject(error);
+			}
+		})();
 	}
 
 	setValue = async (value = mandatory(), next = f => f) => {

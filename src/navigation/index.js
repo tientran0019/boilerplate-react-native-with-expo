@@ -10,11 +10,13 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useTheme } from '@zellosoft/antd-react-native/lib/style';
 
 import { navigationRef, isReadyRef } from 'src/navigation/navigation';
 
 import NotFoundScreen from 'src/screens/NotFoundScreen';
 import ModalScreen from 'src/screens/ModalScreen';
+import LoginScreen from 'src/screens/LoginScreen';
 
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -36,6 +38,12 @@ const Navigation = ({ colorScheme, loggedIn }) => {
 		};
 	}, []);
 
+	const theme = useTheme();
+
+	const initName = React.useMemo(() => {
+		return loggedIn ? 'Root' : 'Login';
+	}, [loggedIn]);
+
 	return (
 		<NavigationContainer
 			ref={navigationRef}
@@ -47,19 +55,13 @@ const Navigation = ({ colorScheme, loggedIn }) => {
 		>
 			<Stack.Navigator
 				screenOptions={{
-					...screenOptionsDefault,
+					...screenOptionsDefault(theme),
+					animation: 'slide_from_right',
 					headerShown: false,
 				}}
+				initialRouteName={initName}
 			>
-				{
-					// !loggedIn ?
-					// 	<>
-					// 		<Stack.Screen name="Login" component={LoginScreen} />
-					// 	</> :
-					// 	<>
-					// 		<Stack.Screen name="Root" component={BottomTabNavigator} />
-					// 	</>
-				}
+				<Stack.Screen name="Login" component={LoginScreen} />
 				<Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
 				<Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
 				<Stack.Group screenOptions={{ presentation: 'modal' }}>

@@ -1,17 +1,20 @@
 /* --------------------------------------------------------
-* Author Trần Đức Tiến
-* Email tientran0019@gmail.com
+
+* Author Tien Tran
+* Email tientran@zellosoft.com
 * Phone 0972970075
 *
-* Created: 2020-12-01 17:03:18
+* Created: 2021-09-28 22:42:09
 *------------------------------------------------------- */
 
 import dayjs from 'src/utils/moment';
 
-export default (date, format = 'YYYY.MM.DD HH:mm') => {
+const formatDate = (date, format = 'DD/MM/YYYY') => {
 	if (!date) {
 		return '--';
 	}
 
-	return (dayjs(date).format(format) + ' (UTC' + dayjs(date).format('Z')?.split(':')?.[0] + ')').toUpperCase();
+	return dayjs(date).format(format);
 };
+
+export default formatDate;

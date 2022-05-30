@@ -3,56 +3,73 @@
 * Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2022-03-19 06:20:58
+* Created: 2022-03-18 11:07:32
 *------------------------------------------------------- */
-import { Ionicons } from '@expo/vector-icons';
+
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { Toast } from '@zellosoft/antd-react-native';
 
 import useAsync from 'react-use/lib/useAsync';
 
-import AuthStorage from 'src/utils/auth-storage';
-
-import { actionGetUserAuth } from 'src/redux/actions/auth';
-
-export default function useCheckLogin() {
-	const [loggedIn, setLoggedIn] = React.useState(false);
-	const [isLoadingComplete, setLoadingComplete] = React.useState(false);
-
-	const auth = useSelector(state => state.auth);
-	const dispatch = useDispatch();
+export default function useCachedResources() {
+	const [caching, setCaching] = React.useState(true);
 
 	// Load any resources or data that we need prior to rendering the app
 	useAsync(async () => {
 		try {
 			SplashScreen.preventAutoHideAsync();
 
-			// Load fonts
-			await Font.loadAsync({
-				...Ionicons.font,
-				'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+			Toast.config({
+				duration: 2,
+				mask: false,
+				stackable: false,
 			});
 
-			// check login
-			const isLogin = await AuthStorage.loggedIn;
-			setLoggedIn(isLogin);
+			// Load fonts
+			await Font.loadAsync({
+				'Roboto': require('src/assets/fonts/Roboto/Roboto-Regular.ttf'),
+				'RobotoItalic': require('src/assets/fonts/Roboto/Roboto-Italic.ttf'),
+				'Roboto-Thin': require('src/assets/fonts/Roboto/Roboto-Thin.ttf'),
+				'Roboto-ThinItalic': require('src/assets/fonts/Roboto/Roboto-ThinItalic.ttf'),
+				'Roboto-Light': require('src/assets/fonts/Roboto/Roboto-Light.ttf'),
+				'Roboto-Medium': require('src/assets/fonts/Roboto/Roboto-Medium.ttf'),
+				'Roboto-LightItalic': require('src/assets/fonts/Roboto/Roboto-LightItalic.ttf'),
+				'Roboto-Bold': require('src/assets/fonts/Roboto/Roboto-Bold.ttf'),
+				'Roboto-BoldItalic': require('src/assets/fonts/Roboto/Roboto-BoldItalic.ttf'),
+				'Roboto-MediumItalic': require('src/assets/fonts/Roboto/Roboto-MediumItalic.ttf'),
+				'Roboto-Black': require('src/assets/fonts/Roboto/Roboto-Black.ttf'),
+				'Roboto-BlackItalic': require('src/assets/fonts/Roboto/Roboto-BlackItalic.ttf'),
+			});
 
-			if (isLogin) {
-				await dispatch(await actionGetUserAuth());
-				// await dispatch(await actionCountUnread());
-			}
+			await Font.loadAsync(
+				'IcoMoon',
+				// eslint-disable-next-line
+				require('src/assets/fonts/icomoon/icomoon.ttf')
+			);
+
+			await Font.loadAsync(
+				'antoutline',
+				// eslint-disable-next-line
+				require('@ant-design/icons-react-native/fonts/antoutline.ttf')
+			);
+
+			await Font.loadAsync(
+				'antfill',
+				// eslint-disable-next-line
+				require('@ant-design/icons-react-native/fonts/antfill.ttf')
+			);
 		} catch (e) {
 			// We might want to provide this error information to an error reporting service
 			// eslint-disable-next-line no-console
 			console.warn(e);
 		} finally {
-			setLoadingComplete(true);
+			setCaching(false);
 			SplashScreen.hideAsync();
 		}
-	}, [auth.userId]);
+	}, []);
 
-	return [isLoadingComplete, loggedIn];
+	return [caching];
 }

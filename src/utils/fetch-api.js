@@ -1,23 +1,25 @@
-/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 /* eslint-disable no-undef */
 /* eslint-disable prefer-destructuring */
 /* --------------------------------------------------------
-* Author Trần Đức Tiến
+* Author Tien Tran
 * Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2020-03-23 16:51:21
+* Created: 2022-03-18 10:33:59
 *------------------------------------------------------- */
-import merge from 'lodash/merge';
-import queryString from 'query-string';
+
+// import merge from 'lodash/merge';
+// import queryString from 'query-string';
+
+import axios from 'axios';
 
 import { Alert } from 'react-native';
+import navigation from 'src/navigation/navigation';
 
 import CONSTANTS from 'src/constants/configs';
-
-import navigation from 'src/navigation/navigation';
 
 import AuthStorage from './auth-storage';
 
@@ -27,110 +29,152 @@ const mandatory = () => {
 
 const { API_URL } = CONSTANTS;
 
-export default async ({ url, options, payload = {} } = mandatory(), cb = f => f) => {
-	try {
-		const defaultOptions = {
-			method: 'GET',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-		};
+const axiosInstance = axios.create({
+	baseURL: API_URL,
+	timeout: 300000,
+	headers: {
+		'Content-Type': 'application/json',
+	},
+});
 
-		const opts = merge(defaultOptions, options);
+axiosInstance.defaults.timeout = 300000;
 
-		// set token
-		if (await AuthStorage.token) {
-			opts.headers.Authorization = 'Bearer ' + (await AuthStorage.token);
-		}
+export const setupInterceptors = (store) => {
+	axiosInstance.interceptors.request.use(
+		async (config) => {
+			// set token
+			const accessToken = await AuthStorage.accessToken;
 
-		let uri = API_URL + url;
+			if (accessToken) {
+				// eslint-disable-next-line no-param-reassign
+				config.headers.Authorization = 'Bearer ' + accessToken;
+			}
+			return config;
+		},
+		(error) => {
+			return Promise.reject(error);
+		},
+	);
 
-		if (payload && Object.keys(payload).length > 0) {
-			if (opts && opts.method === 'GET') {
-				uri = queryString.stringifyUrl({ url: uri, query: payload });
-			} else {
-				if (opts.headers['Content-Type'] === 'multipart/form-data') {
-					delete opts.headers['Content-Type'];
+	axiosInstance.interceptors.response.use(
+		(res) => {
+			return res;
+		},
+		async (err) => {
+			const originalConfig = err.config || {};
+			const refreshToken = await AuthStorage.refreshToken;
+			const value = await AuthStorage.value;
 
-					const formData = new FormData();
+			if (originalConfig?.url !== '/users/logout' && err.response && refreshToken) {
+				// Access Token was expired
+				if (err.response.status === 401 && !originalConfig._retry) {
+					originalConfig._retry = true;
 
-					Object.entries(payload).forEach(([key, val]) => {
-						if (val) {
-							if (key === 'pdfFiles' || key === 'images' || key === 'newImages' || key === 'newPdfFiles' || key === 'mediaFiles' || key === 'newMediaFiles') {
-								val.forEach((file) => {
-									formData.append(key, { uri: file.uri, name: file.name, type: 'multipart/form-data' });
-								});
-							} else if (key === 'deleteImages' || key === 'deletePdfFiles' || key === 'deleteMediaFiles') {
-								val.forEach((file) => {
-									formData.append(key, file);
-								});
-							} else if (key === 'profilePicture') {
-								formData.append(key, { uri: val.uri, name: val.name, type: 'multipart/form-data' });
-							} else {
-								formData.append(key, val);
-							}
+					try {
+						const rs = await axios.post(API_URL + '/users/refresh-token', {
+							refreshToken,
+							timeout: 300000,
+						});
+
+						const { accessToken } = rs.data;
+
+						await AuthStorage.setValue({
+							...value,
+							accessToken,
+						});
+
+						return axiosInstance(originalConfig);
+					} catch (_error) {
+						const { response } = _error;
+
+						if (response?.data?.status === 401 || response?.data?.code === 'INVALID_REFRESH_TOKEN') {
+							navigation.navigate('Logout');
 						}
-					});
 
-					opts.body = formData;
-				} else {
-					opts.body = JSON.stringify(payload);
+						return Promise.reject(response?.data || _error);
+					}
 				}
 			}
-		}
 
-		if (__DEV__) {
+			return Promise.reject(err?.response?.data || err);
+		},
+	);
+};
+
+const fetchApi = async ({ url, options = { headers: {}, method: 'GET' }, payload = {}, dispatch = f => f, silence = false } = mandatory(), cb = f => f) => {
+	const { method = 'GET', headers = {} } = options;
+
+	try {
+		if (process.env.APP_ENV === 'development') {
 			console.log('------');
-			console.log('Call API: url, options, payload', uri, opts, payload);
+			console.log('Call API: url, options, payload', url, options, payload);
 		}
 
-		const response = await fetch(uri, opts);
+		if (headers && Object.keys(headers).length > 0) {
+			axiosInstance.defaults.headers = {
+				...axiosInstance.defaults.headers,
+				...headers,
+			};
+		} else {
+			axiosInstance.defaults.headers = {
+				'Content-Type': 'application/json',
+			};
+		}
 
-		if (__DEV__) {
+		const response = await axiosInstance?.[method?.toLowerCase() || 'get']?.(url, payload);
+
+		if (process.env.APP_ENV === 'development') {
 			console.log('------');
 		}
 
-		if (response.ok && (response.status === 204 || response.statusText === 'No Content')) {
+		if (response.status === 204 || response.statusText === 'No Content') {
 			cb(null, {});
 			return {};
 		}
-		const data = await response.json();
 
 		if (response.status !== 200) {
-			throw data;
+			throw response;
 		}
+
+		const { data = {} } = response;
 
 		cb(null, data);
 		return data;
-	} catch (err) {
-		if (__DEV__) {
-			console.log('Call API Error: ', err);
+	} catch (error) {
+		if (process.env.APP_ENV === 'development') {
+			console.log('Call API Error: ', error);
 		}
 
-		setTimeout(() => {
-			Alert.alert(
-				'Oops!',
-				err.errors?.[0]?.message || err.message || err.toString(),
-				[
-					{
-						text: 'Ok',
-						onPress: async () => {
-							if (err.status === 403 || err.status === 401) {
-								const loggedIn = await AuthStorage.loggedIn;
-								if (loggedIn) {
-									navigation.navigate('Logout');
-								} else {
-									navigation.navigate('Intro');
+		if (!silence) {
+			setTimeout(() => {
+				Alert.alert(
+					'Oops!',
+					typeof error === 'string' ? error : (error?.message || 'Server is not working properly! Please try again later.'),
+					[
+						{
+							text: 'Ok',
+							onPress: async () => {
+								if (err.status === 403 || err.status === 401) {
+									const loggedIn = await AuthStorage.loggedIn;
+									if (loggedIn) {
+										navigation.navigate('Logout');
+									} else {
+										navigation.reset({
+											index: 0,
+											routes: [{ name: 'Welcome' }],
+										});
+									}
 								}
-							}
+							},
 						},
-					},
-				],
-			);
-		}, 200);
+					],
+				);
+			}, 200);
+		}
 
-		cb(err);
-		throw err;
+		cb(error);
+		throw error;
 	}
 };
+
+export default fetchApi;
