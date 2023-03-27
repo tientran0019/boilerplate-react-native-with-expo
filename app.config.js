@@ -5,7 +5,6 @@
 *
 * Created: 2022-05-30 21:52:31
 *------------------------------------------------------- */
-
 const isDev = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -66,6 +65,10 @@ export default ({ config }) => {
 				'READ_INTERNAL_STORAGE',
 				'WRITE_INTERNAL_STORAGE',
 			],
+		},
+		'web': {
+			'bundler': 'metro',
+			'favicon': './src/assets/images/favicon.png',
 		},
 	};
 

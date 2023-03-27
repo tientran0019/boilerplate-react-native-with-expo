@@ -6,6 +6,7 @@ module.exports = function (api) {
 			'babel-preset-expo',
 		],
 		plugins: [
+			require.resolve('expo-router/babel'),
 			['transform-inline-environment-variables', {
 				'include': [
 					'NODE_ENV',
@@ -19,7 +20,6 @@ module.exports = function (api) {
 					],
 					'alias': {
 						'src': './src',
-						'assets': './assets',
 					},
 					'extensions': [
 						'.ios.js',

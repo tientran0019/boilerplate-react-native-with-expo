@@ -20,7 +20,7 @@ import Text from 'src/components/UIDisplay/Text';
 const propTypes = {
 	children: PropTypes.any,
 	innerRef: PropTypes.any,
-	style: PropTypes.object,
+	style: PropTypes.any,
 };
 
 const defaultProps = {

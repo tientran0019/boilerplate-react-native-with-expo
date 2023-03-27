@@ -7,21 +7,16 @@
 *------------------------------------------------------- */
 
 import * as Font from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import * as React from 'react';
 
 import { Toast } from '@zellosoft/antd-react-native';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import useAsync from 'react-use/lib/useAsync';
 
 export default function useCachedResources() {
-	const [caching, setCaching] = React.useState(true);
-
 	// Load any resources or data that we need prior to rendering the app
-	useAsync(async () => {
+	const { loading, value: success, error } = useAsync(async () => {
 		try {
-			SplashScreen.preventAutoHideAsync();
-
 			Toast.config({
 				duration: 2,
 				mask: false,
@@ -30,6 +25,7 @@ export default function useCachedResources() {
 
 			// Load fonts
 			await Font.loadAsync({
+				SpaceMono: require('src/assets/fonts/SpaceMono-Regular.ttf'),
 				'Roboto': require('src/assets/fonts/Roboto/Roboto-Regular.ttf'),
 				'RobotoItalic': require('src/assets/fonts/Roboto/Roboto-Italic.ttf'),
 				'Roboto-Thin': require('src/assets/fonts/Roboto/Roboto-Thin.ttf'),
@@ -42,6 +38,7 @@ export default function useCachedResources() {
 				'Roboto-MediumItalic': require('src/assets/fonts/Roboto/Roboto-MediumItalic.ttf'),
 				'Roboto-Black': require('src/assets/fonts/Roboto/Roboto-Black.ttf'),
 				'Roboto-BlackItalic': require('src/assets/fonts/Roboto/Roboto-BlackItalic.ttf'),
+				...FontAwesome.font,
 			});
 
 			await Font.loadAsync(
@@ -61,15 +58,15 @@ export default function useCachedResources() {
 				// eslint-disable-next-line
 				require('@ant-design/icons-react-native/fonts/antfill.ttf')
 			);
+
+			return true;
 		} catch (e) {
 			// We might want to provide this error information to an error reporting service
 			// eslint-disable-next-line no-console
-			console.warn(e);
-		} finally {
-			setCaching(false);
-			SplashScreen.hideAsync();
+			console.warn('DEV ~ file: useCachedResources.js:64 ~ const{loading,value:success,error}=useAsync ~ e:', e);
+			throw e;
 		}
 	}, []);
 
-	return [caching];
+	return { loading, error, success };
 }

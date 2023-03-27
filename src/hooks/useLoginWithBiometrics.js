@@ -23,7 +23,7 @@ export default function useLoginWithBiometrics(options = { auto: false, silence:
 
 	const handleLoginBio = React.useCallback(async () => {
 		if (!loggedIn) {
-			Modal.error('', 'Vui lòng đăng nhập bằng mật khẩu trước.');
+			Modal.error('', 'Please login with password first.');
 
 			return;
 		}
@@ -36,7 +36,7 @@ export default function useLoginWithBiometrics(options = { auto: false, silence:
 			// const supportedBiometrics = await LocalAuthentication.supportedAuthenticationTypesAsync();
 
 			if (loggedIn && !isBiometricAvailable) {
-				Modal.error('', 'Thiết bị của bạn không hỗ trợ Sinh trắc học. Vui lòng đăng nhập bằng mật khẩu');
+				Modal.error('', 'Your device does not support Biometrics. Please login with password.');
 
 				await dispatch(await actionLogout(() => {
 					// navigation.reset({
@@ -48,7 +48,7 @@ export default function useLoginWithBiometrics(options = { auto: false, silence:
 			// Check Biometrics are saved locally in user's device
 			const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
 			if (loggedIn && !savedBiometrics) {
-				Modal.error('', 'Thiết bị của bạn chưa đăng ký bất kỳ phương thức Sinh trắc học nào. Vui lòng đăng nhập bằng mật khẩu');
+				Modal.error('', 'Your device has not registered any Biometric methods. Please login with password.');
 				await dispatch(await actionLogout(() => {
 					// navigation.reset({
 					// 	index: 0,
@@ -67,7 +67,7 @@ export default function useLoginWithBiometrics(options = { auto: false, silence:
 				});
 
 				if (biometricAuth.error) {
-					Modal.error('', 'Quá trình đăng nhập nhập bằng Sinh trắc học không thành công');
+					Modal.error('', 'Login with Biometrics failed.');
 				}
 				// Log the user in on success
 				if (biometricAuth.success) {
@@ -78,7 +78,7 @@ export default function useLoginWithBiometrics(options = { auto: false, silence:
 				}
 			}
 		} catch (e) {
-			Modal.error('', 'Quá trình đăng nhập nhập bằng Sinh trắc học không thành công');
+			Modal.error('', 'Login with Biometrics failed.');
 		}
 	}, [dispatch, loggedIn, navigation]);
 
@@ -120,7 +120,7 @@ export default function useLoginWithBiometrics(options = { auto: false, silence:
 			});
 
 			if (biometricAuth.error) {
-				Modal.error('', 'Quá trình đăng nhập nhập bằng Sinh trắc học không thành công');
+				Modal.error('', 'Login with Biometrics failed.');
 			}
 			// Log the user in on success
 			if (biometricAuth.success) {

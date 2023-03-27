@@ -17,7 +17,6 @@
 import axios from 'axios';
 
 import { Alert } from 'react-native';
-import navigation from 'src/navigation/navigation';
 
 import CONSTANTS from 'src/constants/configs';
 
@@ -156,14 +155,14 @@ const fetchApi = async ({ url, options = { headers: {}, method: 'GET' }, payload
 							onPress: async () => {
 								if (err.status === 403 || err.status === 401) {
 									const loggedIn = await AuthStorage.loggedIn;
-									if (loggedIn) {
-										navigation.navigate('Logout');
-									} else {
-										navigation.reset({
-											index: 0,
-											routes: [{ name: 'Welcome' }],
-										});
-									}
+									// if (loggedIn) {
+									// 	navigation.navigate('Logout');
+									// } else {
+									// 	navigation.reset({
+									// 		index: 0,
+									// 		routes: [{ name: 'Welcome' }],
+									// 	});
+									// }
 								}
 							},
 						},
