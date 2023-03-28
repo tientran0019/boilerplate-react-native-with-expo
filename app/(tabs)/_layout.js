@@ -10,12 +10,12 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 
 import { Pressable } from 'react-native';
-import { useSelector } from 'react-redux';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
+import useTheme from 'src/hooks/useTheme';
 
-import getTheme from 'src/themes';
+import withRequiredAuthentication from 'src/HOCs/withRequiredAuthentication';
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -33,8 +33,7 @@ const TabBarIcon = (props) => {
 };
 
 const TabLayout = () => {
-	const settings = useSelector(state => state.settings);
-	const theme = getTheme(settings.theme);
+	const theme = useTheme();
 
 	return (
 		<Tabs
@@ -78,4 +77,4 @@ TabLayout.propTypes = propTypes;
 
 TabLayout.defaultProps = defaultProps;
 
-export default TabLayout;
+export default withRequiredAuthentication(TabLayout);

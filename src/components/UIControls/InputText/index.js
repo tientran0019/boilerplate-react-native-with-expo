@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { InputItem } from '@zellosoft/antd-react-native';
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 
 import View from 'src/components/UIDisplay/View';
 import Text from 'src/components/UIDisplay/Text';

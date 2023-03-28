@@ -12,7 +12,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useHeaderHeight } from '@react-navigation/elements';
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';

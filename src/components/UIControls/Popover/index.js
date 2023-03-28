@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Popover from 'react-native-popover-view';
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 
 import { TouchableOpacity, Platform } from 'react-native';
 

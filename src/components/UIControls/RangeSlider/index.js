@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import Range from 'rn-range-slider';
 
 import { View } from 'react-native';
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 
 import Text from 'src/components/UIDisplay/Text';
 

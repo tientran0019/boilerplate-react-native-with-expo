@@ -12,7 +12,7 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import useUpdateEffect from 'react-use/lib/useUpdateEffect';
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 
 import { View, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';

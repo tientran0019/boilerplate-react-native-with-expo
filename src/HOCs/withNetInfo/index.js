@@ -10,14 +10,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NetInfo from '@react-native-community/netinfo';
 import useAsyncFn from 'react-use/lib/useAsyncFn';
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 import { StatusBar } from 'expo-status-bar';
 
 import { View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { Button } from '@zellosoft/antd-react-native';
 
 import Text from 'src/components/UIDisplay/Text';
-import Button from 'src/components/UIControls/Button';
 
 const propTypes = {
 	children: PropTypes.any,
@@ -84,7 +84,7 @@ const withNetInfo = (Component) => {
 									textAlign: 'center',
 								}}
 							>
-								Mất kết nối mạng
+								Lost Internet connection
 							</Text>
 							<Text
 								style={{
@@ -92,9 +92,9 @@ const withNetInfo = (Component) => {
 									textAlign: 'center',
 								}}
 							>
-								Vui lòng kiểm tra cài đặt mạng và thử lại
+								Please check your network settings and try again.
 							</Text>
-							<Button onPress={doFetch}>Thử lại</Button>
+							<Button onPress={doFetch}>Retry</Button>
 						</View>
 				}
 			</View>

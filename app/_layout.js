@@ -26,7 +26,6 @@ import useCachedDataApi from 'src/hooks/useCachedDataApi';
 import useTheme from 'src/hooks/useTheme';
 
 import ReduxProvider from 'src/redux';
-import getTheme from 'src/themes';
 
 export {
 	// Catch any errors thrown by the Layout component.
@@ -63,8 +62,7 @@ const App = (props) => {
 	const { loading, error } = useCachedResources();
 	const { loading: loadingApi, error: e, value: { loggedIn } = {} } = useCachedDataApi();
 
-	const settings = useSelector(state => state.settings);
-	const theme = getTheme(settings.theme);
+	const theme = useTheme();
 
 	useEffect(() => {
 		SystemUI.setBackgroundColorAsync(theme.fill_body);
@@ -84,7 +82,7 @@ const App = (props) => {
 					<SplashScreen /> :
 					<Provider locale={viVN} theme={{ ...theme }}>
 						<SafeAreaProvider>
-							<RootLayoutNav colorScheme={settings.theme} loggedIn={loggedIn} />
+							<RootLayoutNav colorScheme={theme.name} loggedIn={loggedIn} />
 						</SafeAreaProvider>
 					</Provider>
 			}
@@ -104,7 +102,7 @@ RootLayout.propTypes = propTypes;
 
 RootLayout.defaultProps = defaultProps;
 
-export default RootLayout;
+export default React.memo(RootLayout);
 
 // global catch error to avoid crash
 global.ErrorUtils?.setGlobalHandler((e, isFatal) => {

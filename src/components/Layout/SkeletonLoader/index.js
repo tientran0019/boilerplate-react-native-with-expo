@@ -11,7 +11,7 @@
 * Created: 2022-05-06 16:30:11
 *------------------------------------------------------- */
 import * as React from 'react';
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 import {
 	Animated,
 	View,

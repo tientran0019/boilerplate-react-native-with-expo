@@ -8,14 +8,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 
 import { View, Image } from 'react-native';
 import useCheckLogin from 'src/hooks/useCheckLogin';
 import { useNavigation } from '@react-navigation/native';
+import { Link, Stack } from 'expo-router';
+
+import { Button } from '@zellosoft/antd-react-native';
 
 import Text from 'src/components/UIDisplay/Text';
-import Button from 'src/components/UIControls/Button';
 import Container from 'src/components/Layout/Container';
 
 const propTypes = {
@@ -49,8 +51,9 @@ const withRequiredAuthentication = (Component) => {
 					loading ?
 						null :
 						<View>
+							<Stack.Screen options={{ title: 'Oops!' }} />
 							<Image
-								source={theme.name === 'light' ? require('./images/icon.png') : require('./images/icon-dark.png')}
+								source={theme.name === 'light' ? require('./images/icon.png') : require('./images/icon.png')}
 								style={{
 									width: 225,
 									height: 257,
@@ -67,7 +70,7 @@ const withRequiredAuthentication = (Component) => {
 									textAlign: 'center',
 								}}
 							>
-								AZA Holdings
+								Oops!
 							</Text>
 							<Text
 								style={{
@@ -75,9 +78,11 @@ const withRequiredAuthentication = (Component) => {
 									textAlign: 'center',
 								}}
 							>
-								Vui lòng đăng nhập để xem nội dụng này
+								Please login to view this content.
 							</Text>
-							<Button onPress={() => navigation.navigate('Login')}>Đăng nhập</Button>
+							<Link href="/login">
+								<Text>Login</Text>
+							</Link>
 							<Text
 								type="link"
 								style={{
@@ -86,7 +91,7 @@ const withRequiredAuthentication = (Component) => {
 								}}
 								onPress={() => navigation.navigate('SignUp')}
 							>
-								Đăng ký
+								Sign Up
 							</Text>
 						</View>
 				}

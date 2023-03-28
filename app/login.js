@@ -9,11 +9,14 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 
 import EditScreenInfo from 'src/components/EditScreenInfo';
 import Text from 'src/components/UIDisplay/Text';
 import View from 'src/components/UIDisplay/View';
+
+import LoginScreen from 'src/screens/LoginScreen';
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -40,20 +43,16 @@ const styles = StyleSheet.create({
 	},
 });
 
-const TabTwoScreen = (props) => {
+const Login = (props) => {
 	// const {  } = props;
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.title}>Tab Two</Text>
-			<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-			<EditScreenInfo path="app/(tabs)/index.js" />
-		</View>
+		<LoginScreen />
 	);
 };
 
-TabTwoScreen.propTypes = propTypes;
+Login.propTypes = propTypes;
 
-TabTwoScreen.defaultProps = defaultProps;
+Login.defaultProps = defaultProps;
 
-export default TabTwoScreen;
+export default Login;

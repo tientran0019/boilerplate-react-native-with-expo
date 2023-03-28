@@ -14,7 +14,7 @@ import dayjs from 'src/utils/moment';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 
 import { Platform } from 'react-native';
 

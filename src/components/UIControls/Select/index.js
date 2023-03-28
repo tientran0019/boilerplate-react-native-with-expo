@@ -16,7 +16,7 @@ import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 
 import { Feather, AntDesign } from '@expo/vector-icons';
 
-import { useTheme } from '@zellosoft/antd-react-native/lib/style';
+import useTheme from 'src/hooks/useTheme';
 
 import Text from 'src/components/UIDisplay/Text';
 import View from 'src/components/UIDisplay/View';

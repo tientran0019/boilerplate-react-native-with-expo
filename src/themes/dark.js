@@ -12,7 +12,7 @@ const brandPrimary = '#00953B';
 const brandPrimaryTap = '#009A4D';
 
 export default {
-	name: 'light',
+	name: 'dark',
 
 	gradient_bg: ['#A1E5C4', '#56BE82', '#00953B'],
 	gradient_bg_inverse: ['#A1E5C4', '#56BE82', '#00953B'].reverse(),

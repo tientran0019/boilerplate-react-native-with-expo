@@ -49,7 +49,7 @@ const TabOneScreen = (props) => {
 			<Text style={styles.title}>Tab One</Text>
 			<ToggleTheme />
 			<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-			<EditScreenInfo path="app/(tabs)/index.tsx" />
+			<EditScreenInfo path="app/(tabs)/index.js" />
 		</View>
 	);
 };
