@@ -18,7 +18,7 @@ export default function useCheckLogin() {
 	const { value: loggedIn = false, loading, retry } = useAsyncRetry(async () => {
 		try {
 			// check login
-			const isLogin = await AuthStorage.loggedIn && auth.id;
+			const isLogin = await AuthStorage.loggedIn && !!auth.id;
 
 			return isLogin;
 		} catch (e) {

@@ -112,6 +112,10 @@ export default {
 
 	// spacing
 	//---
+	spacing_sm: 5,
+	spacing_md: 10,
+	spacing_lg: 15,
+
 	// horizontal spacing
 	h_spacing_sm: 5,
 	h_spacing_md: 10,

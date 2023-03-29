@@ -25,7 +25,6 @@ import Form from 'src/components/UIControls/Form';
 import InputText from 'src/components/UIControls/InputText';
 import InputPassword from 'src/components/UIControls/InputPassword';
 
-import useCheckLogin from 'src/hooks/useCheckLogin';
 import { useRouter } from 'expo-router';
 
 const propTypes = {
@@ -38,7 +37,6 @@ const defaultProps = {
 
 const SignInScreen = (props) => {
 	const { navigation } = props;
-	const { loading: loadingLogin, loggedIn } = useCheckLogin();
 
 	const [loading, setLoading] = React.useState(false);
 	const dispatch = useDispatch();
@@ -46,12 +44,6 @@ const SignInScreen = (props) => {
 
 	const inputPass = React.useRef();
 	const [form] = Form.useForm();
-
-	// React.useEffect(() => {
-	// 	if (loggedIn) {
-	// 		router.replace('(tabs)/');
-	// 	}
-	// }, [loggedIn, router]);
 
 	const handleSubmitFrom = React.useCallback(async (values) => {
 		try {
@@ -80,7 +72,7 @@ const SignInScreen = (props) => {
 			<Container
 				headerShown
 				headerTransparent
-				loading={loading || loadingLogin}
+				loading={loading}
 				showIndicator={false}
 			>
 				<View

@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Link, Tabs } from 'expo-router';
 import useTheme from 'src/hooks/useTheme';
 import useNavConfigs from 'src/hooks/useNavConfigs';
+import withRequiredAuthentication from 'src/HOCs/withRequiredAuthentication';
 
 import ToggleTheme from 'src/components/Layout/ToggleTheme';
 import Logo from 'src/components/Layout/Logo';
@@ -147,4 +148,4 @@ TabLayout.propTypes = propTypes;
 
 TabLayout.defaultProps = defaultProps;
 
-export default (TabLayout);
+export default withRequiredAuthentication(TabLayout, { loginIsRequired: true });

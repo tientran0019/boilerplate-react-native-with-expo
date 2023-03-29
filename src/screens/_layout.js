@@ -31,10 +31,13 @@ export {
 	ErrorBoundary,
 } from 'expo-router';
 
-// export const unstableSettings = {
-// 	// Ensure that reloading on `/modal` keeps a back button present.
-// 	initialRouteName: '(tabs)',
-// };
+export const unstable_settings = {
+	// Ensure that reloading on `/modal` keeps a back button present.
+	initialRouteName: '(tabs)',
+	auth: {
+		initialRouteName: 'login',
+	},
+};
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -45,14 +48,13 @@ const defaultProps = {
 };
 
 const RootLayoutNav = ({ colorScheme, loggedIn }) => {
-	console.log('DEV ~ file: _layout.js:48 ~ RootLayoutNav ~ loggedIn:', loggedIn);
 	// const colorScheme = useColorScheme();
 
 	return (
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<Stack>
-				<Stack.Screen name="(index)" options={{ headerShown: false }} redirect={!loggedIn} />
-				<Stack.Screen name="(auth)" options={{ headerShown: false }} redirect={loggedIn} />
+				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+				<Stack.Screen name="(auth)" options={{ headerShown: false }} />
 				<Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
 			</Stack>
 		</ThemeProvider>

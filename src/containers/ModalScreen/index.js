@@ -10,6 +10,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 
 import { StyleSheet } from 'react-native';
+import { Link, useNavigation } from "expo-router";
 
 import EditScreenInfo from 'src/components/EditScreenInfo';
 import Text from 'src/components/UIDisplay/Text';
@@ -43,13 +44,18 @@ const styles = StyleSheet.create({
 
 const ModalScreen = (props) => {
 	// const {  } = props;
+	const navigation = useNavigation();
+	// If the page was reloaded or navigated to directly, then the modal should be presented as
+	// a full screen page. You may need to change the UI to account for this.
+	const isPresented = navigation.canGoBack();
 
 	return (
 		<Container style={styles.container}>
 			<Text style={styles.title}>Modal</Text>
 			<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 			<EditScreenInfo path="app/modal.js" />
-
+			{/* Use `../` as a simple way to navigate to the root. This is not analogous to "goBack". */}
+			{isPresented && <Link href="../"><Text color="danger">Dismiss</Text></Link>}
 			{/* Use a light status bar on iOS to account for the black space above the modal */}
 			{/* <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} /> */}
 		</Container>

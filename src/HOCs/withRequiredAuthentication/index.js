@@ -12,7 +12,7 @@ import useTheme from 'src/hooks/useTheme';
 
 import { Image } from 'react-native';
 import useCheckLogin from 'src/hooks/useCheckLogin';
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, Redirect, SplashScreen } from 'expo-router';
 
 import { Button } from '@zellosoft/antd-react-native';
 
@@ -27,14 +27,23 @@ const defaultProps = {
 	children: null,
 };
 
-const withRequiredAuthentication = (Component) => {
+const withRequiredAuthentication = (Component, options = {}) => {
 	// eslint-disable-next-line func-names
 	return function (props) {
 		const { loading, loggedIn, retry } = useCheckLogin();
 		const theme = useTheme();
 
+		if (loading) {
+			return <SplashScreen />;
+		}
+
 		if (loggedIn && !loading) {
 			return <Component {...props} />;
+		}
+
+		if (!loggedIn && !loading && options.loginIsRequired) {
+			// Redirect to the login screen if the user is not authenticated.
+			return <Redirect href="/login" />;
 		}
 
 		return (

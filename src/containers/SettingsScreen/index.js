@@ -35,7 +35,7 @@ const SettingsScreen = (props) => {
 							await dispatch(await actionLogout());
 
 							Toast.loading('Loading...', 0.3, () => {
-								router.push('/login');
+								router.replace('/login');
 							});
 						} catch (error) {
 							Toast.fail({
