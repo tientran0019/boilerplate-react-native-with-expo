@@ -47,11 +47,11 @@ const SignInScreen = (props) => {
 	const inputPass = React.useRef();
 	const [form] = Form.useForm();
 
-	React.useEffect(() => {
-		if (loggedIn) {
-			router.replace('(tabs)/');
-		}
-	}, [loggedIn, router]);
+	// React.useEffect(() => {
+	// 	if (loggedIn) {
+	// 		router.replace('(tabs)/');
+	// 	}
+	// }, [loggedIn, router]);
 
 	const handleSubmitFrom = React.useCallback(async (values) => {
 		try {
@@ -59,7 +59,7 @@ const SignInScreen = (props) => {
 			await dispatch(await actionLogin(values));
 
 			Toast.loading('Loading...', 0.3, () => {
-				router.replace('(tabs)/');
+				router.replace('/');
 			});
 		} catch (error) {
 			Toast.fail({

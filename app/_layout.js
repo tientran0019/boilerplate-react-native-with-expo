@@ -50,11 +50,9 @@ const RootLayoutNav = ({ colorScheme, loggedIn }) => {
 
 	return (
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<Stack
-				initialRouteName={loggedIn ? '(tabs)' : '/login'}
-			>
-				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-				<Stack.Screen name="(auth)" options={{ headerShown: false }} />
+			<Stack>
+				<Stack.Screen name="(index)" options={{ headerShown: false }} redirect={!loggedIn} />
+				<Stack.Screen name="(auth)" options={{ headerShown: false }} redirect={loggedIn} />
 				<Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
 			</Stack>
 		</ThemeProvider>
