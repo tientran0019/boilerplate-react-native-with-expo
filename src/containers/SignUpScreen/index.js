@@ -8,14 +8,14 @@
 *------------------------------------------------------- */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import { Button, Toast } from '@zellosoft/antd-react-native';
 
 import { KeyboardAvoidingView, Platform } from 'react-native';
 
-import { actionLogin } from 'src/redux/actions/auth';
+import { actionSignUp } from 'src/redux/actions/auth';
 
 import Text from 'src/components/UIDisplay/Text';
 import View from 'src/components/UIDisplay/View';
@@ -35,9 +35,7 @@ const defaultProps = {
 	// navigation: {},
 };
 
-const SignInScreen = (props) => {
-	// const { navigation } = props;
-
+const SignUpScreen = (props) => {
 	const [loading, setLoading] = React.useState(false);
 	const dispatch = useDispatch();
 	const router = useRouter();
@@ -48,7 +46,7 @@ const SignInScreen = (props) => {
 	const handleSubmitFrom = React.useCallback(async (values) => {
 		try {
 			setLoading(true);
-			await dispatch(await actionLogin(values));
+			await dispatch(await actionSignUp(values));
 
 			Toast.loading('Loading...', 0.3, () => {
 				router.replace('/');
@@ -94,10 +92,6 @@ const SignInScreen = (props) => {
 					<Form
 						form={form}
 						onFinish={handleSubmitFrom}
-						initialValues={{
-							email: 'demo@gmail.com',
-							password: '123123',
-						}}
 					>
 						<Form.Field
 							name="email"
@@ -119,6 +113,27 @@ const SignInScreen = (props) => {
 							<InputText
 								placeholder="Email"
 								type="email"
+								autoCapitalize="none"
+								blurOnSubmit={false}
+								onSubmitEditing={() => { inputPass?.current?.focus(); }}
+							/>
+						</Form.Field>
+						<Form.Field
+							name="fullName"
+							rules={[
+								{
+									required: true,
+									whitespace: false,
+									message: 'Required Information',
+								},
+							]}
+							style={{
+								marginBottom: 20,
+							}}
+						>
+							<InputText
+								placeholder="Full Name"
+								type="text"
 								autoCapitalize="none"
 								blurOnSubmit={false}
 								onSubmitEditing={() => { inputPass?.current?.focus(); }}
@@ -150,39 +165,7 @@ const SignInScreen = (props) => {
 						</Form.Field>
 						<View
 							style={{
-								flexDirection: 'row',
-								justifyContent: 'space-between',
-								marginBottom: 20,
-								marginTop: 10,
-							}}
-						>
-
-							<Link href="/forgot-password" asChild>
-								<Text
-									style={{
-
-									}}
-									type="link"
-								>
-									Forgot password?
-								</Text>
-							</Link>
-							<Link href="/signup" asChild>
-								<Text
-									style={{
-										textAlign: 'right',
-									}}
-									type="link"
-								>
-									Sign up
-								</Text>
-							</Link>
-						</View>
-						<View
-							style={{
-								flexDirection: 'row',
-								justifyContent: 'space-between',
-								alignItems: 'center',
+								marginTop: 20,
 							}}
 						>
 							<Button
@@ -194,8 +177,19 @@ const SignInScreen = (props) => {
 									flex: 1,
 								}}
 							>
-								Login
+								Sign Up
 							</Button>
+							<Link href="/login" asChild replace>
+								<Text
+									style={{
+										textAlign: 'center',
+										marginTop: 20,
+									}}
+									type="link"
+								>
+									Login
+								</Text>
+							</Link>
 						</View>
 					</Form>
 				</View>
@@ -221,8 +215,8 @@ const SignInScreen = (props) => {
 	);
 };
 
-SignInScreen.propTypes = propTypes;
+SignUpScreen.propTypes = propTypes;
 
-SignInScreen.defaultProps = defaultProps;
+SignUpScreen.defaultProps = defaultProps;
 
-export default SignInScreen;
+export default SignUpScreen;

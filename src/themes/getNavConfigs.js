@@ -9,6 +9,9 @@ import { Platform } from 'react-native';
 
 export default (theme) => {
 	return {
+		animation: 'slide_from_right',
+		headerMode: 'screen',
+		freezeOnBlur: true,
 		headerTitleAlign: 'center',
 		headerBackTitleVisible: false,
 		headerTransparent: false,
@@ -45,11 +48,9 @@ export default (theme) => {
 		},
 		headerTintColor: theme.color_text_base,
 		headerRightContainerStyle: {
-			marginEnd: 15,
 			marginBottom: Platform.OS === 'android' ? -3 : 8,
 		},
 		headerLeftContainerStyle: {
-			marginStart: 15,
 			marginBottom: Platform.OS === 'android' ? -3 : 8,
 		},
 	};

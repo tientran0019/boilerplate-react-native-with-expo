@@ -14,7 +14,7 @@ import { Pressable, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Link, Tabs } from 'expo-router';
 import useTheme from 'src/hooks/useTheme';
-import useNavConfigs from 'src/hooks/useNavConfigs';
+// import useNavConfigs from 'src/hooks/useNavConfigs';
 import withRequiredAuthentication from 'src/HOCs/withRequiredAuthentication';
 
 import ToggleTheme from 'src/components/Layout/ToggleTheme';
@@ -35,12 +35,12 @@ const defaultProps = {
  */
 const TabLayout = () => {
 	const theme = useTheme();
-	const configs = useNavConfigs();
+	// const configs = useNavConfigs();
 
 	return (
 		<Tabs
 			screenOptions={{
-				...configs,
+				// ...configs,
 				headerShown: true,
 				lazy: true,
 				unmountOnBlur: true,
@@ -48,9 +48,10 @@ const TabLayout = () => {
 					return (
 						<Logo
 							style={{
-								width: 28,
-								height: 28,
+								width: 24,
+								height: 24,
 								marginBottom: 5,
+								marginLeft: 15,
 							}}
 							fullText={false}
 						/>
@@ -64,6 +65,7 @@ const TabLayout = () => {
 								flexDirection: 'row',
 								alignItems: 'center',
 								// marginTop: 10,
+								marginRight: 15,
 							}}
 						>
 							<ToggleTheme size="small" />

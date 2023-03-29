@@ -9,9 +9,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import useNavConfigs from 'src/hooks/useNavConfigs';
-
-import { Stack, Slot, Redirect, SplashScreen } from 'expo-router';
+import { Slot, Redirect, SplashScreen } from 'expo-router';
 
 import useCheckLogin from 'src/hooks/useCheckLogin';
 
@@ -24,7 +22,6 @@ const defaultProps = {
 };
 
 const AuthLayout = () => {
-	const configs = useNavConfigs({ headerShown: false });
 	const { loading, loggedIn } = useCheckLogin();
 
 	if (loading) {
@@ -38,7 +35,7 @@ const AuthLayout = () => {
 
 	return (
 		<>
-			<Stack.Screen options={configs} />
+			{/* <Stack.Screen options={configs} /> */}
 			<Slot />
 		</>
 	);

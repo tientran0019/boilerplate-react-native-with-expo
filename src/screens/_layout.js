@@ -23,6 +23,7 @@ import { Provider } from '@zellosoft/antd-react-native';
 import useCachedResources from 'src/hooks/useCachedResources';
 import useCachedDataApi from 'src/hooks/useCachedDataApi';
 import useTheme from 'src/hooks/useTheme';
+import useNavConfigs from 'src/hooks/useNavConfigs';
 
 import ReduxProvider from 'src/redux';
 
@@ -49,10 +50,15 @@ const defaultProps = {
 
 const RootLayoutNav = ({ colorScheme, loggedIn }) => {
 	// const colorScheme = useColorScheme();
+	const configs = useNavConfigs();
 
 	return (
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<Stack>
+			<Stack
+				screenOptions={{
+					...configs,
+				}}
+			>
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				<Stack.Screen name="(auth)" options={{ headerShown: false }} />
 				<Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
