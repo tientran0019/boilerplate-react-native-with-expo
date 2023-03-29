@@ -14,6 +14,7 @@ import { StyleSheet } from 'react-native';
 import EditScreenInfo from 'src/components/EditScreenInfo';
 import Text from 'src/components/UIDisplay/Text';
 import View from 'src/components/UIDisplay/View';
+import Container from 'src/components/Layout/Container';
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -44,11 +45,11 @@ const TabTwoScreen = (props) => {
 	// const {  } = props;
 
 	return (
-		<View style={styles.container}>
+		<Container style={styles.container}>
 			<Text style={styles.title}>Tab Two</Text>
 			<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-			<EditScreenInfo path="app/(tabs)/index.js" />
-		</View>
+			<EditScreenInfo path="app/(tabs)/two.js" />
+		</Container>
 	);
 };
 

@@ -9,13 +9,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import { StyleSheet, Platform } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-
-import EditScreenInfo from 'src/components/EditScreenInfo';
-import Text from 'src/components/UIDisplay/Text';
-import View from 'src/components/UIDisplay/View';
-
 import LoginScreen from 'src/screens/LoginScreen';
 
 const propTypes = {
@@ -26,24 +19,7 @@ const defaultProps = {
 	// classes: {},
 };
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: 'bold',
-	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: '80%',
-	},
-});
-
-const Login = (props) => {
+const Login = () => {
 	// const {  } = props;
 
 	return (

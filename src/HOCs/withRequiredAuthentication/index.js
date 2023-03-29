@@ -10,9 +10,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useTheme from 'src/hooks/useTheme';
 
-import { View, Image } from 'react-native';
+import { Image } from 'react-native';
 import useCheckLogin from 'src/hooks/useCheckLogin';
-import { useNavigation } from '@react-navigation/native';
 import { Link, Stack } from 'expo-router';
 
 import { Button } from '@zellosoft/antd-react-native';
@@ -32,7 +31,6 @@ const withRequiredAuthentication = (Component) => {
 	// eslint-disable-next-line func-names
 	return function (props) {
 		const { loading, loggedIn, retry } = useCheckLogin();
-		const navigation = useNavigation();
 		const theme = useTheme();
 
 		if (loggedIn && !loading) {
@@ -50,13 +48,13 @@ const withRequiredAuthentication = (Component) => {
 				{
 					loading ?
 						null :
-						<View>
+						<>
 							<Stack.Screen options={{ title: 'Oops!' }} />
 							<Image
 								source={theme.name === 'light' ? require('./images/icon.png') : require('./images/icon.png')}
 								style={{
 									width: 225,
-									height: 257,
+									height: 225,
 									marginBottom: 50,
 									marginTop: 20,
 									alignSelf: 'center',
@@ -64,7 +62,7 @@ const withRequiredAuthentication = (Component) => {
 								resizeMode="contain"
 							/>
 							<Text
-								type="h3"
+								type="h1"
 								style={{
 									marginBottom: 5,
 									textAlign: 'center',
@@ -80,20 +78,21 @@ const withRequiredAuthentication = (Component) => {
 							>
 								Please login to view this content.
 							</Text>
-							<Link href="/login">
-								<Text>Login</Text>
+							<Link href="/login" asChild replace>
+								<Button type="primary">Login</Button>
 							</Link>
-							<Text
-								type="link"
-								style={{
-									textAlign: 'center',
-									paddingVertical: 30,
-								}}
-								onPress={() => navigation.navigate('SignUp')}
-							>
-								Sign Up
-							</Text>
-						</View>
+							<Link href="/signup" asChild replace>
+								<Text
+									type="link"
+									style={{
+										textAlign: 'center',
+										paddingVertical: 30,
+									}}
+								>
+									Sign Up
+								</Text>
+							</Link>
+						</>
 				}
 			</Container>
 		);

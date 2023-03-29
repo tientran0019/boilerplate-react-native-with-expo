@@ -9,7 +9,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import ModalScreen from 'src/screens/ModalScreen';
+import LoginScreen from 'src/screens/LoginScreen';
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -19,16 +19,16 @@ const defaultProps = {
 	// classes: {},
 };
 
-const Modal = () => {
+const Login = () => {
 	// const {  } = props;
 
 	return (
-		<ModalScreen />
+		<LoginScreen />
 	);
 };
 
-Modal.propTypes = propTypes;
+Login.propTypes = propTypes;
 
-Modal.defaultProps = defaultProps;
+Login.defaultProps = defaultProps;
 
-export default Modal;
+export default Login;

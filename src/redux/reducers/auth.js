@@ -11,7 +11,7 @@ export const initialState = {};
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'LOGIN_SUCCESS':
-			return action?.payload?.user || {};
+			return action?.payload || {};
 
 		case 'LOGIN_FAILED':
 			return { error: action?.payload?.message || action?.payload };

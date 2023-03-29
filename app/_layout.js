@@ -14,7 +14,6 @@ import React, { useEffect } from 'react';
 // import { useColorScheme } from 'react-native';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { SplashScreen, Stack } from 'expo-router';
-import { useSelector } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SystemUI from 'expo-system-ui';
 
@@ -32,10 +31,10 @@ export {
 	ErrorBoundary,
 } from 'expo-router';
 
-export const unstableSettings = {
-	// Ensure that reloading on `/modal` keeps a back button present.
-	initialRouteName: '(tabs)',
-};
+// export const unstableSettings = {
+// 	// Ensure that reloading on `/modal` keeps a back button present.
+// 	initialRouteName: '(tabs)',
+// };
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -46,13 +45,17 @@ const defaultProps = {
 };
 
 const RootLayoutNav = ({ colorScheme, loggedIn }) => {
+	console.log('DEV ~ file: _layout.js:48 ~ RootLayoutNav ~ loggedIn:', loggedIn);
 	// const colorScheme = useColorScheme();
 
 	return (
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<Stack>
+			<Stack
+				initialRouteName={loggedIn ? '(tabs)' : '/login'}
+			>
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-				<Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+				<Stack.Screen name="(auth)" options={{ headerShown: false }} />
+				<Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
 			</Stack>
 		</ThemeProvider>
 	);

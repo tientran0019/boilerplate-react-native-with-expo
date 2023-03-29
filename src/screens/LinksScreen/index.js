@@ -1,3 +1,11 @@
+/* --------------------------------------------------------
+* Author Tien Tran
+* Email tientran0019@gmail.com
+* Phone 0972970075
+*
+* Created: 2023-03-29 12:11:57
+*------------------------------------------------------- */
+
 import React from 'react';
 import { ExpoLinksView } from '@expo/samples';
 
@@ -13,10 +21,6 @@ const LinksScreen = () => {
 			<ExpoLinksView />
 		</Container>
 	);
-};
-
-LinksScreen.navigationOptions = {
-	title: 'Links',
 };
 
 export default LinksScreen;

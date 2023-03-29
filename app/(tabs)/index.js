@@ -9,12 +9,9 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import { StyleSheet } from 'react-native';
+// import { Stack } from 'expo-router';
 
-import EditScreenInfo from 'src/components/EditScreenInfo';
-import Text from 'src/components/UIDisplay/Text';
-import View from 'src/components/UIDisplay/View';
-import ToggleTheme from 'src/components/Layout/ToggleTheme';
+import HomeScreen from 'src/screens/HomeScreen';
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -24,38 +21,19 @@ const defaultProps = {
 	// classes: {},
 };
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: 'bold',
-	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: '80%',
-	},
-});
-
-const TabOneScreen = (props) => {
+const Home = (props) => {
 	// const {  } = props;
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.title}>Tab One</Text>
-			<ToggleTheme />
-			<View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-			<EditScreenInfo path="app/(tabs)/index.js" />
-		</View>
+		<>
+			{/* <Stack.Screen options={{}} /> */}
+			<HomeScreen />
+		</>
 	);
 };
 
-TabOneScreen.propTypes = propTypes;
+Home.propTypes = propTypes;
 
-TabOneScreen.defaultProps = defaultProps;
+Home.defaultProps = defaultProps;
 
-export default TabOneScreen;
+export default Home;

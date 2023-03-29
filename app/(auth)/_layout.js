@@ -9,7 +9,9 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import ModalScreen from 'src/screens/ModalScreen';
+import useNavConfigs from 'src/hooks/useNavConfigs';
+
+import { Stack, Slot } from 'expo-router';
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -19,16 +21,19 @@ const defaultProps = {
 	// classes: {},
 };
 
-const Modal = () => {
-	// const {  } = props;
+const AuthLayout = () => {
+	const configs = useNavConfigs({ headerShown: false });
 
 	return (
-		<ModalScreen />
+		<>
+			<Stack.Screen options={configs} />
+			<Slot />
+		</>
 	);
 };
 
-Modal.propTypes = propTypes;
+AuthLayout.propTypes = propTypes;
 
-Modal.defaultProps = defaultProps;
+AuthLayout.defaultProps = defaultProps;
 
-export default Modal;
+export default AuthLayout;

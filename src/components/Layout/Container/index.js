@@ -5,7 +5,7 @@
 * Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2022-03-29 14:29:29
+* Created: 1522-03-29 14:29:29
 *------------------------------------------------------- */
 
 import React from 'react';
@@ -71,10 +71,10 @@ const Container = (props) => {
 	const theme = useTheme();
 	useScrollToTop(scrollRef);
 
-	let paddingTop = headerTransparent ? headerHeight + 20 : 20;
+	let paddingTop = headerTransparent ? headerHeight + theme.spacing_lg : theme.spacing_lg;
 
 	if (!headerShown) {
-		paddingTop = insets.top + 20;
+		paddingTop = insets.top + theme.spacing_lg;
 	}
 
 	const WrapperCpn = scrollable ? ScrollView : View;
@@ -146,8 +146,8 @@ const Container = (props) => {
 							{
 								flex: 1,
 								minHeight: '100%',
-								padding: (scrollable ? 20 : 0),
-								paddingBottom: fixedBottom ? 20 : (insets.bottom || 20),
+								padding: (scrollable ? theme.spacing_lg : 0),
+								paddingBottom: fixedBottom ? theme.spacing_lg : (insets.bottom || theme.spacing_lg),
 							},
 							style,
 							{
@@ -162,7 +162,7 @@ const Container = (props) => {
 					fixedBottom ?
 						<View
 							style={{
-								paddingBottom: insets.bottom || 20,
+								paddingBottom: insets.bottom || theme.spacing_lg,
 							}}
 						>
 							{fixedBottom}

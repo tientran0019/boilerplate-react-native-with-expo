@@ -1,3 +1,10 @@
+/* --------------------------------------------------------
+* Author Tien Tran
+* Email tientran0019@gmail.com
+* Phone 0972970075
+*
+* Created: 2023-03-29 12:12:08
+*------------------------------------------------------- */
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
@@ -5,13 +12,13 @@ import {
 	Platform,
 	ScrollView,
 	StyleSheet,
-	TouchableOpacity,
 } from 'react-native';
 
 import Text from 'src/components/UIDisplay/Text';
 import View from 'src/components/UIDisplay/View';
 import Container from 'src/components/Layout/Container';
 import ToggleTheme from 'src/components/Layout/ToggleTheme';
+import ExternalLink from 'src/components/UIControls/ExternalLink';
 
 const styles = StyleSheet.create({
 	container: {
@@ -164,7 +171,7 @@ const HomeScreen = () => {
 					<View
 						style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
 					>
-						<Text>screens/HomeScreen.js</Text>
+						<Text>src/screens/HomeScreen.js</Text>
 					</View>
 
 					<Text style={styles.getStartedText}>
@@ -173,11 +180,13 @@ const HomeScreen = () => {
 				</View>
 
 				<View style={styles.helpContainer}>
-					<TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-						<Text style={styles.helpLinkText}>
-							Help, it didn’t automatically reload!
+					<ExternalLink
+						href="https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
+					>
+						<Text style={{ textAlign: 'center' }} type="link">
+							Tap here if your app doesn&apos;t automatically update after making changes
 						</Text>
-					</TouchableOpacity>
+					</ExternalLink>
 				</View>
 			</ScrollView>
 
@@ -190,16 +199,12 @@ const HomeScreen = () => {
 					style={[styles.codeHighlightContainer, styles.navigationFilename]}
 				>
 					<Text style={styles.codeHighlightText}>
-						navigation/MainTabNavigator.js
+						app/(tabs)/_layout.js
 					</Text>
 				</View>
 			</View>
 		</Container>
 	);
-};
-
-HomeScreen.navigationOptions = {
-	header: null,
 };
 
 export default HomeScreen;

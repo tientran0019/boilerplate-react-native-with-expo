@@ -9,7 +9,6 @@
 import * as Font from 'expo-font';
 
 import { Toast } from '@zellosoft/antd-react-native';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import useAsync from 'react-use/lib/useAsync';
 
@@ -38,7 +37,6 @@ export default function useCachedResources() {
 				'Roboto-MediumItalic': require('src/assets/fonts/Roboto/Roboto-MediumItalic.ttf'),
 				'Roboto-Black': require('src/assets/fonts/Roboto/Roboto-Black.ttf'),
 				'Roboto-BlackItalic': require('src/assets/fonts/Roboto/Roboto-BlackItalic.ttf'),
-				...FontAwesome.font,
 			});
 
 			await Font.loadAsync(

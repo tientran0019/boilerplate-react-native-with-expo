@@ -1,37 +1,20 @@
 /* --------------------------------------------------------
-* Author Trần Đức Tiến
+* Author Tien Tran
 * Email tientran0019@gmail.com
 * Phone 0972970075
 *
-* Created: 2020-12-26 11:16:11
+* Created: 2023-03-29 11:22:08
 *------------------------------------------------------- */
 
 import * as React from 'react';
 // import PropTypes from 'prop-types';
-import { useNavigation } from '@react-navigation/native';
+import { Link } from 'expo-router';
 
-import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
+import { Image } from 'react-native';
+import { Button } from '@zellosoft/antd-react-native';
 
 import Text from 'src/components/UIDisplay/Text';
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-		padding: 20,
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: '500',
-		marginTop: 30,
-	},
-	link: {
-		marginTop: 15,
-		marginBottom: 20,
-	},
-});
+import Container from 'src/components/Layout/Container';
 
 const propTypes = {
 	// navigation: PropTypes.object.isRequired,
@@ -43,22 +26,44 @@ const defaultProps = {
 
 const NotFoundScreen = (props) => {
 	// const { navigation } = props;
-	const navigation = useNavigation();
 
 	return (
-		<View style={styles.container}>
+		<Container
+			style={{
+				justifyContent: 'center',
+			}}
+		>
 			<Image
 				style={{
-					width: '100%',
+					width: 225,
+					marginBottom: 50,
+					marginTop: 20,
+					alignSelf: 'center',
 				}}
 				resizeMode="contain"
 				source={require('./images/img.png')}
 			/>
-			<Text style={styles.title}>This screen doesn&apos;t exist.</Text>
-			<TouchableOpacity onPress={() => navigation.replace('Root')} style={styles.link}>
-				<Text color="primary">Go to home screen!</Text>
-			</TouchableOpacity>
-		</View>
+			<Text
+				type="h1"
+				style={{
+					marginBottom: 5,
+					textAlign: 'center',
+				}}
+			>
+				Oops!
+			</Text>
+			<Text
+				style={{
+					marginBottom: 40,
+					textAlign: 'center',
+				}}
+			>
+				This screen doesn&apos;t exist.
+			</Text>
+			<Link href="/" asChild replace>
+				<Button type="primary">Go to home screen!</Button>
+			</Link>
+		</Container>
 	);
 };
 

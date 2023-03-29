@@ -80,7 +80,6 @@ const typesStyle = {
 	'link': {
 		fontFamily: 'Roboto',
 		fontSize: 14,
-		fontWeight: 'bold',
 		lineHeight: 18,
 	},
 	'note': {

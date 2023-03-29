@@ -13,19 +13,20 @@ import { useDispatch } from 'react-redux';
 
 import { Button, Toast } from '@zellosoft/antd-react-native';
 
-import { KeyboardAvoidingView, Image, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 import { actionLogin } from 'src/redux/actions/auth';
 
 import Text from 'src/components/UIDisplay/Text';
 import View from 'src/components/UIDisplay/View';
 import Container from 'src/components/Layout/Container';
+import Logo from 'src/components/Layout/Logo';
 import Form from 'src/components/UIControls/Form';
-import Touchable from 'src/components/UIControls/Touchable';
 import InputText from 'src/components/UIControls/InputText';
 import InputPassword from 'src/components/UIControls/InputPassword';
 
 import useCheckLogin from 'src/hooks/useCheckLogin';
+import { useRouter } from 'expo-router';
 
 const propTypes = {
 	navigation: PropTypes.object.isRequired,
@@ -41,15 +42,16 @@ const SignInScreen = (props) => {
 
 	const [loading, setLoading] = React.useState(false);
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	const inputPass = React.useRef();
 	const [form] = Form.useForm();
 
 	React.useEffect(() => {
 		if (loggedIn) {
-			navigation.navigate('Root', { screen: 'Home' });
+			router.replace('(tabs)/');
 		}
-	}, [loggedIn, navigation]);
+	}, [loggedIn, router]);
 
 	const handleSubmitFrom = React.useCallback(async (values) => {
 		try {
@@ -57,10 +59,7 @@ const SignInScreen = (props) => {
 			await dispatch(await actionLogin(values));
 
 			Toast.loading('Loading...', 0.3, () => {
-				navigation.reset({
-					index: 0,
-					routes: [{ name: 'Root' }],
-				});
+				router.replace('(tabs)/');
 			});
 		} catch (error) {
 			Toast.fail({
@@ -69,7 +68,7 @@ const SignInScreen = (props) => {
 		} finally {
 			setLoading(false);
 		}
-	}, [dispatch, navigation]);
+	}, [dispatch, router]);
 
 	return (
 		<KeyboardAvoidingView
@@ -86,11 +85,20 @@ const SignInScreen = (props) => {
 			>
 				<View
 					style={{
-						flex: 2,
+						flex: 1,
 						justifyContent: 'center',
 						marginTop: 20,
 					}}
 				>
+					<View
+						style={{
+							flex: 1,
+							justifyContent: 'center',
+							marginTop: 20,
+						}}
+					>
+						<Logo size={100} />
+					</View>
 					<Form
 						form={form}
 						onFinish={handleSubmitFrom}
@@ -190,21 +198,10 @@ const SignInScreen = (props) => {
 								type="primary"
 								style={{
 									flex: 1,
-									marginRight: 20,
 								}}
 							>
 								Login
 							</Button>
-							<Touchable>
-								<Image
-									style={{
-										width: 45,
-										height: 45,
-									}}
-									resizeMode="contain"
-									source={require('./images/face-id.png')}
-								/>
-							</Touchable>
 						</View>
 					</Form>
 				</View>
