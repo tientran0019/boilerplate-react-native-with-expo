@@ -9,7 +9,11 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import SettingsScreen from 'src/screens/SettingsScreen';
+import { Stack } from 'expo-router';
+
+import useNavConfigs from 'src/hooks/useNavConfigs';
+
+import NotFound from 'src/containers/NotFoundScreen';
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -19,16 +23,21 @@ const defaultProps = {
 	// classes: {},
 };
 
-const Settings = (props) => {
+const NotFoundScreen = (props) => {
 	// const {  } = props;
 
+	const configs = useNavConfigs({ headerShown: false });
+
 	return (
-		<SettingsScreen />
+		<>
+			<Stack.Screen options={configs} />
+			<NotFound />
+		</>
 	);
 };
 
-Settings.propTypes = propTypes;
+NotFoundScreen.propTypes = propTypes;
 
-Settings.defaultProps = defaultProps;
+NotFoundScreen.defaultProps = defaultProps;
 
-export default Settings;
+export default NotFoundScreen;

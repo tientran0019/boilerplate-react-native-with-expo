@@ -9,7 +9,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import LinksScreen from 'src/screens/LinksScreen';
+import LoginScreen from 'src/containers/LoginScreen';
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -19,16 +19,16 @@ const defaultProps = {
 	// classes: {},
 };
 
-const Links = (props) => {
+const Login = () => {
 	// const {  } = props;
 
 	return (
-		<LinksScreen />
+		<LoginScreen />
 	);
 };
 
-Links.propTypes = propTypes;
+Login.propTypes = propTypes;
 
-Links.defaultProps = defaultProps;
+Login.defaultProps = defaultProps;
 
-export default Links;
+export default Login;

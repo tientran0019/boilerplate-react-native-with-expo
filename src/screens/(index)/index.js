@@ -9,7 +9,9 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import LoginScreen from 'src/screens/LoginScreen';
+// import { Stack } from 'expo-router';
+
+import HomeScreen from 'src/containers/HomeScreen';
 
 const propTypes = {
 	// classes: PropTypes.object.isRequired,
@@ -19,16 +21,19 @@ const defaultProps = {
 	// classes: {},
 };
 
-const Login = () => {
+const Home = (props) => {
 	// const {  } = props;
 
 	return (
-		<LoginScreen />
+		<>
+			{/* <Stack.Screen options={{}} /> */}
+			<HomeScreen />
+		</>
 	);
 };
 
-Login.propTypes = propTypes;
+Home.propTypes = propTypes;
 
-Login.defaultProps = defaultProps;
+Home.defaultProps = defaultProps;
 
-export default Login;
+export default Home;
